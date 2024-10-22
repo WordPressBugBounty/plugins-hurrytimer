@@ -702,7 +702,6 @@ class Campaign
      */
     public function storeSettings($data)
     {
-
         if (!hurrytimer_allow_unfiltered_html()) {
             $data = wp_kses_post_deep($data);
         }

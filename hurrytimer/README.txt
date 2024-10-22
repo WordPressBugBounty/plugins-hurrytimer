@@ -9,7 +9,7 @@ WC tested up to: 9.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Requires PHP: 5.6
-Stable tag: 2.10.0
+Stable tag: 2.11.0
 
 Create unlimited urgency and scarcity countdown timers for WordPress and WooCommerce to boost conversions and sales instantly.
 
@@ -148,7 +148,16 @@ We improve HurryTimer continuously to fit your needs, if you have a feature requ
 
 == Changelog ==
 
- = 2.10.0 =
+= 2.11.0 =
+
+* New: Added the ability to duplicate campaigns
+* Security hardening and improvements.
+* Enhanced campaign status display in the campaigns list for better visibility and management
+* Improved compatibility with PHP 8.3+
+* Deprecated compatibility with PHP 5.6
+* Various bugfixes and stability improvements
+
+= 2.10.0 =
 
  * Fixed an issue where the countdown timer was not displayed when loaded via Ajax.
  * Minor bug fixes and security enhancements.

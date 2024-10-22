@@ -12,21 +12,19 @@ use Hurrytimer\Utils\Form;
     <div class="hurrytimer-style-control-group hurrytimer-accordion-item active">
 
         <div class="hurrytimer-style-control-title hurrytimer-accordion-heading">
-            <h3>General</h3>
+            <h3><?php esc_html_e('General', 'hurrytimer'); ?></h3>
         </div>
         <div class="hurrytimer-style-control-fields hurrytimer-accordion-content">
 
             <!-- CONTROL -->
             <div class="hurrytimer-style-control-field">
                 <div class="hurrytimer-style-control-label">
-                    <?php _e('Display', "hurrytimer") ?>
+                    <?php esc_html_e('Display', 'hurrytimer') ?>
                 </div>
                 <div class="hurrytimer-style-control-input">
                     <select name="campaign_display">
-                        <option value="block" <?php echo selected(esc_attr($campaign->campaignDisplay),
-                            'block') ?>><?php _e('Block', 'hurrytimer') ?></option>
-                        <option value="inline" <?php echo selected(esc_attr($campaign->campaignDisplay),
-                            'inline') ?>><?php _e('Inline', 'hurrytimer') ?></option>
+                        <option value="block" <?php selected(esc_attr($campaign->campaignDisplay), 'block'); ?>><?php esc_html_e('Block', 'hurrytimer') ?></option>
+                        <option value="inline" <?php selected(esc_attr($campaign->campaignDisplay), 'inline'); ?>><?php esc_html_e('Inline', 'hurrytimer') ?></option>
                     </select>
                 </div>
             </div>
@@ -34,16 +32,13 @@ use Hurrytimer\Utils\Form;
             <!-- CONTROL -->
             <div class="hurrytimer-style-control-field">
                 <div class="hurrytimer-style-control-label">
-                    <?php _e('Alignement', "hurrytimer") ?>
+                    <?php esc_html_e('Alignment', 'hurrytimer') ?>
                 </div>
                 <div class="hurrytimer-style-control-input">
                     <select name="campaign_align">
-                        <option value="left" <?php echo selected(esc_attr($campaign->campaignAlign),
-                            'left') ?>><?php _e('Left', 'hurrytimer') ?></option>
-                        <option value="right" <?php echo selected(esc_attr($campaign->campaignAlign),
-                            'right') ?>><?php _e('Right', 'hurrytimer') ?></option>
-                        <option value="center" <?php echo selected(esc_attr($campaign->campaignAlign),
-                            'center') ?>><?php _e('Center', 'hurrytimer') ?></option>
+                        <option value="left" <?php selected(esc_attr($campaign->campaignAlign), 'left'); ?>><?php esc_html_e('Left', 'hurrytimer') ?></option>
+                        <option value="right" <?php selected(esc_attr($campaign->campaignAlign), 'right'); ?>><?php esc_html_e('Right', 'hurrytimer') ?></option>
+                        <option value="center" <?php selected(esc_attr($campaign->campaignAlign), 'center'); ?>><?php esc_html_e('Center', 'hurrytimer') ?></option>
                     </select>
                 </div>
             </div>
@@ -55,7 +50,7 @@ use Hurrytimer\Utils\Form;
     <div class="hurrytimer-style-control-group hurrytimer-accordion-item">
 
         <div class="hurrytimer-style-control-title hurrytimer-accordion-heading">
-            <h3>Timer Digit</h3>
+            <h3><?php esc_html_e('Timer Digit', 'hurrytimer'); ?></h3>
         </div>
 
         <div class="hurrytimer-style-control-fields hurrytimer-accordion-content">
@@ -63,11 +58,11 @@ use Hurrytimer\Utils\Form;
             <!-- CONTROL -->
             <div class="hurrytimer-style-control-field">
                 <div class="hurrytimer-style-control-label">
-                    <?php _e('Color', "hurrytimer") ?>
+                    <?php esc_html_e('Color', 'hurrytimer') ?>
                 </div>
 
                 <div class="hurrytimer-style-control-input">
-                    <?php echo Form::colorInput('digit_color', $campaign->digitColor) ?>
+                    <?php echo Form::colorInput('digit_color', esc_attr($campaign->digitColor)) ?>
                 </div>
 
             </div>
@@ -75,7 +70,7 @@ use Hurrytimer\Utils\Form;
             <!-- CONTROL -->
             <div class="hurrytimer-style-control-field">
                 <div class="hurrytimer-style-control-label">
-                    <?php _e('Size', "hurrytimer") ?>
+                    <?php esc_html_e('Size', 'hurrytimer') ?>
                 </div>
                 <div class="hurrytimer-style-control-input">
                     <div class="hurrytimer-input-slider" data-input-name="digit_size"></div>
@@ -90,7 +85,7 @@ use Hurrytimer\Utils\Form;
            
             <div class="hurrytimer-style-control-field ">
                     <div class="hurrytimer-style-control-label">
-                        <?php _e('Show separator', "hurrytimer") ?>
+                        <?php esc_html_e('Show separator', 'hurrytimer') ?>
                     </div>
                     <div class="hurrytimer-style-control-input">
                         <?php Utils\Form::toggle('block_separator_visibility',
