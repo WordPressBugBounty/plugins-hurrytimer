@@ -65,13 +65,19 @@ class Bootstrap
     public function run()
     {
         $this->load_macros();
-        (new I18n())->load_plugin_textdomain();
+        add_action('init', [$this, 'load_translations']);
         Installer::get_instance()->upgrade();
         $this->register_post_type();
         $this->define_admin_hooks();
         $this->define_front_hooks();
         $this->define_ip_logs_cleanup_hook();
     }
+
+    public function load_translations()
+    {
+        (new I18n())->load_plugin_textdomain();
+    }
+
     function define_ip_logs_cleanup_hook(){
         add_action( IP_Log_Manager::CLEANUP_ACTION, array( new IP_Log_Manager(), 'cleanup_ip_logs' ) );
     }
