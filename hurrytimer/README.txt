@@ -5,11 +5,11 @@ Tags: countdown timer, evergreen countdown, woocommerce countdown timer, recurri
 Requires at least: 4.0
 Tested up to: 6.7
 WC requires at least: 3.0
-WC tested up to: 9.4
+WC tested up to: 9.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Requires PHP: 5.6
-Stable tag: 2.11.1
+Stable tag: 2.11.2
 
 Create unlimited urgency and scarcity countdown timers for WordPress and WooCommerce to boost conversions and sales instantly.
 
@@ -147,6 +147,10 @@ We improve HurryTimer continuously to fit your needs, if you have a feature requ
 
 
 == Changelog ==
+
+= 2.11.2 =
+
+* Minor bugfixes
 
 = 2.11.1 =
 

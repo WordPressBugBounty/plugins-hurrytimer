@@ -1119,18 +1119,34 @@ class Campaign
             ],
         ];
 
-        if (count($actions) === 0) {
+        if (empty($actions) || !is_array($actions)) {
             return $defaults;
         }
 
         return array_map(function ($action) use ($defaults) {
+            // Ensure we have an array
+            $action = (array)$action;
+            
+            // Parse with defaults to ensure all keys exist
+            $action = wp_parse_args($action, $defaults[0]);
+            
+            // Cast ID to integer
             $action['id'] = (int)$action['id'];
 
-            $action['message'] = preg_replace_callback('#<style(\s=?[\S]*)?>([\s\S]*)?<\/style>#', function ($matches) {
-                return '<style' . $matches[1] . '>' . preg_replace('/\<br(\s*)?\/?\>/i', '', $matches[2]) . '</style>';
-            }, $action['message']);
+            // Clean up message HTML if it exists
+            if (!empty($action['message'])) {
+                $action['message'] = preg_replace_callback(
+                    '#<style(\s=?[\S]*)?>([\s\S]*)?<\/style>#',
+                    function ($matches) {
+                        return isset($matches[1], $matches[2])
+                            ? '<style' . $matches[1] . '>' . preg_replace('/\<br(\s*)?\/?\>/i', '', $matches[2]) . '</style>'
+                            : '';
+                    },
+                    $action['message']
+                );
+            }
 
-            return array_merge($defaults[0], $action);
+            return $action;
         }, $actions);
     }
 
