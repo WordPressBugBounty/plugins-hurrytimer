@@ -32,7 +32,7 @@ class CSS_Builder{
         if(!file_exists($uploads_dir . '/hurrytimer/css/index.html')){
             file_put_contents($uploads_dir . '/hurrytimer/css/index.html', '');
         }
-        array_map('unlink', glob($path . "*.css"));
+        @array_map('unlink', glob($path . "*.css"));
         $build_version = substr( md5( time() ), 0, 16 );
         $css_path = $uploads_dir . '/hurrytimer/css/' . $build_version . '.css';
         file_put_contents($css_path, $css);

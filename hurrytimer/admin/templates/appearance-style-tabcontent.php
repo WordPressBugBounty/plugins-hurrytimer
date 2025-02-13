@@ -428,7 +428,7 @@ use Hurrytimer\Utils\Form;
                         <?php _e('Content', "hurrytimer") ?> 
                     </div>
                     <div class="hurrytimer-style-control-input" >
-                        <textarea name="headline" id="hurryt-headline"  rows="10" style="width:100%"><?php echo esc_html($campaign->headline) ?></textarea>
+                        <textarea name="headline" id="hurryt-headline"  rows="10" style="width:100%"><?php echo esc_textarea($campaign->headline); ?></textarea>
                     </div>
                     <p class="description">Supports shortcodes.</p>
 

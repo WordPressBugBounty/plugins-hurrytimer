@@ -69,26 +69,45 @@ if (!function_exists('hurryt_wc_conditions')) {
     }
 }
 
-if (!function_exists('hurryt_tz')) {
-    /**
-     * Return WP timezone string/offset.
-     *
-     * @return mixed|string|void
-     */
-    function hurryt_tz() {
-        $tz_string = get_option('timezone_string');
-        if (!empty($tz_string)) {
-            return $tz_string;
+if ( ! function_exists( 'hurryt_tz' ) ) {
+    function hurryt_tz( $tz = null ) {
+        
+        // If no saved timezone, fallback to WordPress setting.
+        if (empty($tz)) {
+            $current_offset = get_option('gmt_offset');
+            $tzstring = get_option('timezone_string');
+        
+            if (str_contains($tzstring, 'Etc/GMT')) {
+                $tzstring = '';
+            }
+        
+            if (empty($tzstring)) {
+                if (0 === (int) $current_offset) {
+                    $tzstring = 'UTC+0';
+                } elseif ($current_offset < 0) {
+                    $tzstring = 'UTC' . $current_offset;
+                } else {
+                    $tzstring = 'UTC+' . $current_offset;
+                }
+            }
+        
+            $tz = $tzstring;
         }
-        $offset = get_option('gmt_offset');
-        $hours = (int)$offset;
-        $minutes = abs(($offset - (int)$offset) * 60);
-        $offset = sprintf('%+03d:%02d', $hours, $minutes);
+        
+        // Convert UTC offsets like "UTC+2" into a valid timezone for PHP.
+        if (preg_match('/^UTC[+-]/', $tz)) {
+            $offset = (float)preg_replace( '/UTC\+?/', '', $tz );
+            $hours   = (int) $offset;
+            $minutes = ( $offset - $hours );
+            $sign      = ( $offset < 0 ) ? '-' : '+';
+            $abs_hour  = abs( $hours );
+            $abs_mins  = abs( $minutes * 60 );
+            $tz = sprintf( '%s%02d:%02d', $sign, $abs_hour, $abs_mins );
+        }
 
-        return $offset;
-    }
+        return $tz;
 }
-
+}
 if (!function_exists('hurryt_current_page_id')) {
 
     /**

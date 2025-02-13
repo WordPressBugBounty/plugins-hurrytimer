@@ -4,12 +4,10 @@ Donate link: https://www.paypal.me/nlemsieh
 Tags: countdown timer, evergreen countdown, woocommerce countdown timer, recurring countdown timer, hurry, shipping timer, elementor countdown, divi countdown, urgency timer, scarcity timer, beaver timer, webinar timer
 Requires at least: 4.0
 Tested up to: 6.7
-WC requires at least: 3.0
-WC tested up to: 9.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Requires PHP: 5.6
-Stable tag: 2.11.2
+Stable tag: 2.12.0
 
 Create unlimited urgency and scarcity countdown timers for WordPress and WooCommerce to boost conversions and sales instantly.
 
@@ -148,13 +146,18 @@ We improve HurryTimer continuously to fit your needs, if you have a feature requ
 
 == Changelog ==
 
+= 2.12.0 =
+
+* Security hardening and improvements.
+* Minor bugfixes.
+
 = 2.11.2 =
 
-* Minor bugfixes
+* Minor bugfixes.
 
 = 2.11.1 =
 
-* Stability improvements.
+* Minor bugfixes.
 
 = 2.11.0 =
 

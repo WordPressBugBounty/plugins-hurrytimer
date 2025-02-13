@@ -133,7 +133,7 @@ class CampaignBuilder
     private function regularClientConfig()
     {
         try {
-            $endDate = Carbon::parse( $this->campaign->getEndDatetime(), hurryt_tz() )->getBrowserTimestamp();
+            $endDate = Carbon::parse( $this->campaign->getEndDatetime(), hurryt_tz($this->campaign->timezone) )->getBrowserTimestamp();
             if ( $this->campaign->is_recurring() ) {
                 $endDate = $this->campaign->getRecurrenceEndDate();
                 if ( $endDate ) {
@@ -153,8 +153,8 @@ class CampaignBuilder
             ];
 
         } catch ( Exception $e ) {
-            echo __( sprintf( 'HurryTimer Error: Invalid campaign (ID: %d). Please double check your settings.',
-                $this->campaign->get_id() ), 'hurrytimer' );
+            error_log($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -167,7 +167,6 @@ class CampaignBuilder
     public function getClientConfig( $options = [] )
     {
         $config = $options;
-
         if ( $this->campaign->is_evergreen() ) {
             $config = array_merge( $config, $this->commonClientConfig(), $this->evergreenClientConfig() );
 

@@ -29,7 +29,7 @@ class Date_Placeholder extends Placeholder
         $date = $placeholder;
         switch ( $this->campaign->mode ) {
             case C::MODE_REGULAR:
-                $date = Carbon::parse( $this->campaign->getEndDatetime(), hurryt_tz() );
+                $date = Carbon::parse( $this->campaign->getEndDatetime(), hurryt_tz($this->campaign->timezone) );
                 break;
             case C::MODE_RECURRING:
                 $date = $this->campaign->getRecurrenceEndDate();

@@ -502,6 +502,8 @@ class Campaign
         C::DETECTION_METHOD_IP,
     ];
 
+    public $timezone;
+
 
     public $recurringMonthlyDayType = C::RECURRING_MONTHLY_DAY_OF_MONTH;
 
@@ -510,7 +512,7 @@ class Campaign
 
     public function __construct($id)
     {
-        $this->recurringStartTime = Carbon::now(hurryt_tz())->format('Y-m-d h:i A');
+        $this->recurringStartTime = Carbon::now(hurryt_tz($this->getTimezone()))->format('Y-m-d h:i A');
         $this->id                 = $id;
     }
 
@@ -557,7 +559,7 @@ class Campaign
             case 'specific_pages':
                 $pageIds = $this->getStickyBarPages();
 
-                if (!empty($pageId) && !empty($pageIds) && in_array($pageId, $pageIds, true)) {
+                if (!empty($pageId) && !empty($pageIds) && in_array($pageId, $pageIds)) {
                     return apply_filters('hurryt_show_sticky_bar', true, $this->get_id());
                 }
 
@@ -573,8 +575,7 @@ class Campaign
 
             case 'exclude_pages':
                 $pageIds = $this->getStickyExcludePages();
-
-                if (!empty($pageId) && !empty($pageIds) && in_array($pageId, $pageIds, true)) {
+                if (!empty($pageId) && !empty($pageIds) && in_array($pageId, $pageIds)) {
                     return apply_filters('hurryt_show_sticky_bar', false, $this->get_id());
                 }
 
@@ -756,19 +757,23 @@ class Campaign
                 $this->{$name} = $this->get_prop(Helpers::camelToSnakeCase($name));
             }
         }
-    }
 
+    }
 
     public function getHeadline()
     {
-        if (empty($this->id)) {
-            return $this->headline;
-        }
-        if (metadata_exists('post', $this->id, '_hurryt_headline')) {
-            return $this->get_prop('_hurryt_headline');
-        }
+       $content = $this->get_prop('_hurryt_headline', false);
 
-        return get_the_title($this->id);
+       // User has set a custom headline
+       if( !empty( $content ) ){ return $content; }
+
+       // Backward compat.
+       if (empty($content) && version_compare(get_option('hurrytimer_version'), '2.3.0', '<=')) {
+           return get_the_title($this->id);
+       }
+
+       // Show default headline.
+       return $this->headline;
     }
 
     public function setHeadline($value)
@@ -812,6 +817,15 @@ class Campaign
         return $this->get_prop('mode') == C::MODE_RECURRING;
     }
 
+    public function getTimezone()
+    {
+    return '';
+
+    }
+    public function setTimezone($timezone)
+    {
+        $this->set_prop('timezone', $timezone);
+    }
     /**
      * Save compaign endtime for regular mode.
      *
@@ -1205,7 +1219,7 @@ class Campaign
             return false;
         }
 
-        $now = Carbon::now(hurryt_tz());
+        $now = Carbon::now(hurryt_tz($this->timezone));
 
         return $now->greaterThan($endDate);
     }
@@ -1268,7 +1282,7 @@ class Campaign
     {
         $this->loadSettings();
 
-        $day   = absint(Carbon::now(hurryt_tz())->format('w'));
+        $day   = absint(Carbon::now(hurryt_tz($this->timezone))->format('w'));
 
         $recur = in_array($day, array_map('absint', $this->recurringDays));
 
@@ -1315,8 +1329,8 @@ class Campaign
     public function getRecurringPeriodEndDate()
     {
         list($d, $h, $m, $s) = $this->getRecurringDuration();
-        $now       = Carbon::now(hurryt_tz());
-        $startDate = Carbon::parse($this->recurringStartTime, hurryt_tz());
+        $now       = Carbon::now(hurryt_tz($this->timezone));
+        $startDate = Carbon::parse($this->recurringStartTime, hurryt_tz($this->timezone));
         $interval = (int)$this->recurringInterval;
         $endDate = $now->copy();
 
@@ -1393,8 +1407,8 @@ class Campaign
         try {
 
             $this->loadSettings();
-            $now       = Carbon::now(hurryt_tz());
-            $startDate = Carbon::parse($this->recurringStartTime, hurryt_tz());
+            $now       = Carbon::now(hurryt_tz($this->timezone));
+            $startDate = Carbon::parse($this->recurringStartTime, hurryt_tz($this->timezone));
             $interval  = (int)$this->recurringInterval;
 
 
@@ -1413,7 +1427,7 @@ class Campaign
                 }
 
                 if ($this->shouldEndRecurringByDate()) {
-                    $endDate = Carbon::parse($this->recurringUntil, hurryt_tz());
+                    $endDate = Carbon::parse($this->recurringUntil, hurryt_tz($this->timezone));
                 }
 
                 if ($this->isDayOfWeekRecurring()) {
@@ -1562,7 +1576,7 @@ class Campaign
                 return $period->getEndDate();
             }
 
-            $stop_date = Carbon::parse($this->recurringUntil, hurryt_tz());
+            $stop_date = Carbon::parse($this->recurringUntil, hurryt_tz($this->timezone));
 
             if ($this->shouldEndRecurringByDate() && $stop_date->lessThan($date)) {
                 return $stop_date;
@@ -1794,8 +1808,8 @@ class Campaign
         }
 
         if ($this->is_recurring()) {
-            $start_date = Carbon::parse($this->recurringStartTime, hurryt_tz());
-            $now        = Carbon::now(hurryt_tz());
+            $start_date = Carbon::parse($this->recurringStartTime, hurryt_tz($this->timezone));
+            $now        = Carbon::now(hurryt_tz($this->timezone));
             $now->second = $start_date->second;
             if ($now->lessThan($start_date)) {
 

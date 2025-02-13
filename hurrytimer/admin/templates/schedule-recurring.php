@@ -27,7 +27,7 @@ namespace Hurrytimer;
     </div>
     <?php //endRemoveIf(pro) 
     ?>
-    <table class="form-table" <?php //removeIf(pro) 
+    <table class="hurrytimer-recurring form-table" <?php //removeIf(pro) 
                                 ?> data-hurryt-pro="feature" <?php //endRemoveIf(pro) 
                                                                 ?>>
         <tr class="form-field">
@@ -150,15 +150,29 @@ namespace Hurrytimer;
                 </div>
             </td>
         </tr>
+        
         <!-- Start time { -->
-        <tr class="form-field">
+        <tr class="form-field hurrytimer-startdate-field">
             <td>
-                <label><?php _e('Start date/time', "hurrytimer") ?> <span title="This uses the WordPress timezone set under Settings → General. Current timezone: <?php echo hurryt_current_timezone_string() ?>" class="hurryt-icon" data-icon="help" style="vertical-align: middle;"></span></label>
+                <label><?php _e('Start date/time', "hurrytimer") ?> 
+            </label>
             </td>
             <td>
                 <label for="hurrytimer-end-datetime" class="date hurryt-w-full">
                     <input type="text" name="recurring_start_time" autocomplete="off" class="hurrytimer-datepicker hurryt-w-full" placeholder="Select Date/Time" value="<?php echo $campaign->recurringStartTime ?>">
                 </label>
+            </td>
+        </tr>
+        <tr class="form-field ">
+            <td><label >Timezone <span  title="By default, the site's timezone is used."  class="hurryt-icon" data-icon="help" style="vertical-align: middle;"></span></label>
+                      
+        </td>
+            <td>
+        
+                    <select 
+                    name="timezone"  class="hurryt-w-full">
+                    <?php echo wp_timezone_choice($saved_timezone, get_user_locale()); ?>
+                    </select>
             </td>
         </tr>
         <tr class="form-field" id="hurrytRecurMonthlyDayType">

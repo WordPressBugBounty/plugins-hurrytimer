@@ -12,7 +12,7 @@
  * Plugin Name:       HurryTimer
  * Plugin URI:        https://hurrytimer.com
  * Description:       A Scarcity and Urgency Countdown Timer for WordPress & WooCommerce with recurring and evergreen mode.
- * Version:          2.11.2
+ * Version:          2.12.0
  * Author:            Nabil Lemsieh
  * Author URI:        https://hurrytimer.com
  * License:           GPLv3
@@ -47,7 +47,7 @@ if ( defined( 'HURRYT_IS_PRO' ) ) {
 
 endif;
 
-define('HURRYT_VERSION', '2.11.2');
+define('HURRYT_VERSION', '2.12.0');
 
 define('HURRYT_DIR', plugin_dir_path(__FILE__));
 define('HURRYT_URL', plugin_dir_url(__FILE__));

@@ -608,7 +608,7 @@ class Admin {
             ],
             'COOKIEPATH'            => defined('COOKIEPATH') ? COOKIEPATH : '',
             'COOKIE_DOMAIN'         => defined('COOKIE_DOMAIN') ? COOKIE_DOMAIN : '',
-            'searchProductsNonce' => wp_create_nonce('search-products'),
+            'searchProductsNonce' => wp_create_nonce('search-products')
         ));
     }
 

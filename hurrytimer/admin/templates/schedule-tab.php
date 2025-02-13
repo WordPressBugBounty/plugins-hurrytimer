@@ -43,8 +43,35 @@ global $post_id;
                 </label>
             </td>
         </tr>
+        <?php
+    $saved_timezone = $campaign->timezone;
 
+    $current_offset = get_option('gmt_offset');
+    $tzstring       = get_option('timezone_string');
 
+    // Remove outdated "Etc/GMT" mappings (WordPress does this).
+    if (str_contains($tzstring, 'Etc/GMT')) {
+        $tzstring = '';
+    }
+
+    // If no named timezone is set, convert GMT offset to UTC format.
+    if (empty($tzstring)) {
+        if ($current_offset == 0) {
+            $tzstring = 'UTC+0';
+        } elseif ($current_offset < 0) {
+            $tzstring = 'UTC' . $current_offset;
+        } else {
+            $tzstring = 'UTC+' . $current_offset;
+        }
+    }
+
+    // If no saved timezone yet, use WordPress's timezone setting.
+    if (empty($saved_timezone)) {
+        $saved_timezone = $tzstring;
+    }
+?>
+
+      
     </table>
     <?php include( HURRYT_DIR . 'admin/templates/schedule-regular.php' ) ?>
     <?php include( HURRYT_DIR . 'admin/templates/schedule-evergreen.php' ) ?>

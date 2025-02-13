@@ -26,11 +26,12 @@ class Time_Placeholder extends Placeholder
 
     public function get_value( $options = [])
     {
+        $timezone = $this->campaign->timezone ?: wp_timezone_string();
         switch ( $this->campaign->mode ) {
             case C::MODE_REGULAR:
-                return Carbon::parse( $this->campaign->getEndDatetime() )->format( $this->get_format() );
+                return Carbon::parse( $this->campaign->getEndDatetime() )->tz( $timezone )->format( $this->get_format() );
             case C::MODE_RECURRING:
-                return $this->campaign->getRecurrenceEndDate()->format( $this->get_format() );
+                return $this->campaign->getRecurrenceEndDate()->tz( $timezone )->format( $this->get_format() );
             default:
                 return '{time}';
         }
