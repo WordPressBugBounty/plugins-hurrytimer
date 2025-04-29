@@ -336,3 +336,7 @@ function hurrytimer_allow_unfiltered_html() {
 	 */
 	return apply_filters( 'hurrytimer/allow_unfiltered_html', $allow_unfiltered_html );
 }
+
+function hurrytimer_is_pro(){
+    return defined( 'HURRYT_IS_PRO' ) && HURRYT_IS_PRO;
+}

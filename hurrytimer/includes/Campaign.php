@@ -502,6 +502,7 @@ class Campaign
         C::DETECTION_METHOD_IP,
     ];
 
+    public $timezoneType = 'site';
     public $timezone;
 
 
@@ -819,11 +820,19 @@ class Campaign
 
     public function getTimezone()
     {
+
+        if($this->timezoneType === 'site') {
+            return '';
+        }
     return '';
 
     }
     public function setTimezone($timezone)
     {
+        if($this->timezoneType === 'site') {
+           $timezone = '';
+        }
+
         $this->set_prop('timezone', $timezone);
     }
     /**

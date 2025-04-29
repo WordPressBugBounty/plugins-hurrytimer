@@ -163,18 +163,6 @@ namespace Hurrytimer;
                 </label>
             </td>
         </tr>
-        <tr class="form-field ">
-            <td><label >Timezone <span  title="By default, the site's timezone is used."  class="hurryt-icon" data-icon="help" style="vertical-align: middle;"></span></label>
-                      
-        </td>
-            <td>
-        
-                    <select 
-                    name="timezone"  class="hurryt-w-full">
-                    <?php echo wp_timezone_choice($saved_timezone, get_user_locale()); ?>
-                    </select>
-            </td>
-        </tr>
         <tr class="form-field" id="hurrytRecurMonthlyDayType">
 
             <td><label><?php _e('On the', "hurrytimer") ?></label></td>

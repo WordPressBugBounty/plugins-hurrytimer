@@ -44,8 +44,8 @@ global $post_id;
             </td>
         </tr>
         <?php
-    $saved_timezone = $campaign->timezone;
 
+    $saved_timezone = $campaign->timezone;
     $current_offset = get_option('gmt_offset');
     $tzstring       = get_option('timezone_string');
 
@@ -66,9 +66,9 @@ global $post_id;
     }
 
     // If no saved timezone yet, use WordPress's timezone setting.
-    if (empty($saved_timezone)) {
-        $saved_timezone = $tzstring;
-    }
+    // if (!empty($saved_timezone)) {
+    //     $saved_timezone = $tzstring;
+    // }
 ?>
 
       

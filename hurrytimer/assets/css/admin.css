@@ -37319,3 +37319,13 @@
 #wp-hurryt-headline-wrap {
   width: 100%;
 }
+
+.hurryt-badge-pro {
+  background: #b6b5b5;
+  color: #ffffff;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  margin-left: 4px;
+  vertical-align: middle;
+}

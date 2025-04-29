@@ -1336,5 +1336,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   $(document).on('input keyup paste change', '#hurrytRecurringInterval', function () {
     $('#ht-monthly-recur-interval').text($(this).val());
   });
+  $('.hurryt-timezone-choice').on('change', function () {
+    if ($(this).val() === 'custom') {
+      $('.hurryt-custom-timezone').show();
+    } else {
+      $('.hurryt-custom-timezone').hide();
+    }
+  });
+  $('.hurrytimer-mode').on('change', function () {
+    var mode = $('.hurrytimer-mode:checked').val(); // Get selected value
+
+    var $recurAdjacent = $('.hurrytimer-startdate-field');
+    var $regularAdjacent = $('.hurrytimer-enddate-field');
+    var $tzfield = $('.hurrytimer-timezone-field');
+
+    if (mode == 1) {
+      $tzfield.insertAfter($regularAdjacent);
+    } else if (mode == 3) {
+      $tzfield.insertAfter($recurAdjacent);
+    } else {
+      $tzfield.insertAfter($regularAdjacent);
+    }
+  });
 })(jQuery);
 //# sourceMappingURL=admin.js.map

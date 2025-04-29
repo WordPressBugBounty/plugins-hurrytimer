@@ -214,7 +214,7 @@ class CampaignSettings
         ) {
             return;
         }
-
+        // var_dump($_POST);exit;
         $countdown = new Campaign($post_id);
         $countdown->storeSettings(wp_unslash($_POST));
     }
