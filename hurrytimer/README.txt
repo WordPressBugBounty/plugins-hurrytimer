@@ -7,7 +7,7 @@ Tested up to: 6.8
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Requires PHP: 5.6
-Stable tag: 2.13.0
+Stable tag: 2.13.1
 
 Create unlimited urgency and scarcity countdown timers for WordPress and WooCommerce to boost conversions and sales instantly.
 
@@ -22,6 +22,8 @@ Give each visitor their own unique countdown timer regardless of their local tim
 
 It's a great way to boost conversion by creating a feeling of scarcity, urgency and exclusivity.
 
+HurryTimer works with all page builders out-of-the-box through the use of shortcodes including Elementor, Beaver, Divi, Divi, and more.
+
 **One-time Campaigns:**
 Run a campaign between two fixed dates. No matter who visits your site the countdown timer is the same. It's a great way for event-based sales with a firm deadline.
 
@@ -31,6 +33,7 @@ Recurring campaigns are self repeating countdown timers that run according to a 
 It's great way for telling customers about shipping cut-off times to get them to checkout faster. 
 
 You can schedule minutely, hourly, daily, weekly, and monthly recurrences.
+
 
 ### Lite Features
 - Evergreen & One-time countdown timers.
@@ -89,6 +92,10 @@ For more info check out the following:
 * [Documention](https://docs.hurrytimer.com/).
 * Follow HurryTimer on [Twitter](https://twitter.com/wp_hurrytimer).
 
+### Explore Our Other plugins:
+* [Smart Image Resize](https://sirplugin.com) – Make all your WooCommerce product images the same size automatically — no manual work, no inconsistent layouts.
+* [ReThumbify](https://rethumbify.com) – Regenerate thumbnails in the background with features like pause/resume, selective regeneration, cleanup of old or unused thumbnails, and more.
+
 == Installation ==
 
 ### From within WordPress
@@ -145,6 +152,11 @@ We improve HurryTimer continuously to fit your needs, if you have a feature requ
 
 
 == Changelog ==
+
+= 2.13.1 =
+
+* Stability improvements
+* Minor bugfixes
 
 = 2.13.0 =
 

@@ -193,7 +193,10 @@ class Frontend {
         $status      = sanitize_key($_POST['status']);
         $wc_campaign = new WCCampaign();
         $campaign    = new Campaign($id);
-        $wc_campaign->change_stock_status($campaign, $status);
+        $campaign->loadSettings();
+        if( $campaign->is_expired() ){
+            $wc_campaign->change_stock_status($campaign, $status);
+        }
         die();
     }
 
