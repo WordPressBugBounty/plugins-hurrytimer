@@ -21,17 +21,6 @@ var HurrytimerAction = /*#__PURE__*/function () {
   }
 
   _createClass(HurrytimerAction, [{
-    key: "changeStockStatus",
-    value: function changeStockStatus(campaignId, status) {
-      if (!jQuery.post) return;
-      jQuery.post(hurrytimer_ajax_object.ajax_url, {
-        nonce: hurrytimer_ajax_object.ajax_nonce,
-        action: 'change_stock_status',
-        status: status,
-        campaign_id: campaignId
-      });
-    }
-  }, {
     key: "hasMessageAction",
     value: function hasMessageAction() {
       var _iterator = _createForOfIteratorHelper(this.config.actions),
@@ -535,13 +524,6 @@ var HurrytimerCampaign = /*#__PURE__*/function () {
 
                 case this.actionsOptions.hideAddToCartButton:
                   actionManager.hideAddToCartButton();
-                  break;
-
-                case this.actionsOptions.stockStatus:
-                  if (this.config.isRegular) {
-                    actionManager.changeStockStatus(this.config.id, action['wcStockStatus']);
-                  }
-
                   break;
 
                 case this.actionsOptions.hide:
