@@ -125,7 +125,7 @@ class Frontend {
 
 
     public function ajax_next_recurrence() {
-        // check_ajax_referer('hurryt', 'nonce');
+        check_ajax_referer('hurryt', 'nonce');
         $campaign_id = absint($_GET['id']);
         if (
             !get_post($campaign_id)
@@ -284,43 +284,8 @@ class Frontend {
             'COOKIEPATH'            => defined('COOKIEPATH') ? COOKIEPATH : '',
             'COOKIE_DOMAIN'         => defined('COOKIE_DOMAIN') ? COOKIE_DOMAIN : '',
             'redirect_no_back'      => apply_filters('hurryt_redirect_no_back', true),
-            'expire_coupon_message' => $this->get_coupon_expired_message(),
-            'invalid_checkout_coupon_message'=> $this->get_checkout_invalid_coupon_message()
+            'expire_coupon_message' => __( 'Coupon "%s" has expired.', 'woocommerce' ),
         ]);
     }
 
-
-    /**
-     * Get WooCommerce coupon expired message.
-     *
-     *
-     * TODO: move to /integration/woocommerce
-     *
-     * @return string
-     * @since 2.3
-     */
-    function get_coupon_expired_message() {
-
-        if (!hurryt_is_woocommerce_activated()) {
-            return '';
-        }
-
-        try {
-            return (new \WC_Coupon())->get_coupon_error(\WC_Coupon::E_WC_COUPON_EXPIRED);
-        } catch (\Exception $e) {
-            return '';
-        }
-    }
-     function get_checkout_invalid_coupon_message() {
-
-        if (!hurryt_is_woocommerce_activated()) {
-            return '';
-        }
-
-        try {
-            return (new \WC_Coupon())->get_coupon_error(\WC_Coupon::E_WC_COUPON_INVALID_REMOVED);
-        } catch (\Exception $e) {
-            return '';
-        }
-    }
 }

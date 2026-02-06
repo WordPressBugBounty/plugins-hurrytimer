@@ -92,11 +92,11 @@ if (!empty($campaign->actions) && hurryt_is_woocommerce_activated()) {
                             <?php if (!empty($coupons)) : ?>
                                 <?php
                                 foreach ($coupons as $coupon) : ?>
-                                    <option value="<?php echo $coupon->post_title ?>" <?php echo selected($action['coupon'], $coupon->post_title) ?>><?php echo $coupon->post_title; ?>
+                                    <option value="<?php echo esc_attr($coupon->post_title) ?>" <?php echo selected($action['coupon'], $coupon->post_title) ?>><?php echo esc_html($coupon->post_title); ?>
                                     </option>
                                 <?php endforeach;
                             else : ?>
-                                <option value="<?php echo $action['coupon'] ?>" selected><?php echo $action['coupon']; ?></option>
+                                <option value="<?php echo esc_attr($action['coupon']) ?>" selected><?php echo esc_html($action['coupon']); ?></option>
                             <?php endif; ?>
 
 
@@ -111,7 +111,7 @@ if (!empty($campaign->actions) && hurryt_is_woocommerce_activated()) {
                         <label for=""><?php _e("Redirect URL", "hurrytimer") ?></label>
                     </div>
                     <div class="hurrytimer-action-block-input">
-                        <input type="text" id="hurrytimer-redirect-url" placeholder="http://" name="actions[<?php echo $i ?>][redirectUrl]" value="<?php echo $action['redirectUrl'] ?>" class="hurrytimer-redirect-url" />
+                        <input type="text" id="hurrytimer-redirect-url" placeholder="http://" name="actions[<?php echo $i ?>][redirectUrl]" value="<?php echo esc_attr($action['redirectUrl']) ?>" class="hurrytimer-redirect-url" />
                     </div>
                 </div>
                 <div class="hurrytimer-action-block-subfields hurrytimer-action-display-message-subfields hidden">

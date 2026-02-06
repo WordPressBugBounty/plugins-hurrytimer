@@ -26,7 +26,7 @@ global $post_id;
                            name="duration[]"
                            min="0"
                            data-index="0"
-                           value="<?php echo $campaign->duration[ 0 ] ?>">
+                           value="<?php echo esc_attr($campaign->duration[ 0 ]) ?>">
                 </label>
                 <label>
                     <?php _e( "Hours", "hurrytimer" ) ?>
@@ -35,7 +35,7 @@ global $post_id;
                            name="duration[]"
                            min="0"
                            data-index="1"
-                           value="<?php echo $campaign->duration[ 1 ] ?>"
+                           value="<?php echo esc_attr($campaign->duration[ 1 ]) ?>"
                     >
                 </label>
                 <label>
@@ -45,7 +45,7 @@ global $post_id;
                            name="duration[]"
                            min="0"
                            data-index="2"
-                           value="<?php echo $campaign->duration[ 2 ] ?>"
+                           value="<?php echo esc_attr($campaign->duration[ 2 ]) ?>"
                     >
                 </label>
                 <label>
@@ -54,7 +54,7 @@ global $post_id;
                            class="hurrytimer-duration"
                            name="duration[]"
                            data-index="3"
-                           value="<?php echo $campaign->duration[ 3 ] ?>"
+                           value="<?php echo esc_attr($campaign->duration[ 3 ]) ?>"
                     >
                 </label>
             </div>
@@ -189,7 +189,7 @@ global $post_id;
                            class="hurrytimer-duration"
                            name="restart_duration[days]"
                            min="0"
-                           value="<?php echo $campaign->restartDuration[ 'days' ] ?>">
+                           value="<?php echo esc_attr($campaign->restartDuration[ 'days' ]) ?>">
                 </label>
                 <label>
                     <?php _e( "Hours", "hurrytimer" ) ?>
@@ -197,7 +197,7 @@ global $post_id;
                            class="hurrytimer-duration"
                            name="restart_duration[hours]"
                            min="0"
-                           value="<?php echo $campaign->restartDuration[ 'hours' ] ?>"
+                           value="<?php echo esc_attr($campaign->restartDuration[ 'hours' ]) ?>"
                     >
 
                 </label>
@@ -207,7 +207,7 @@ global $post_id;
                            class="hurrytimer-duration"
                            name="restart_duration[minutes]"
                            min="0"
-                           value="<?php echo $campaign->restartDuration[ 'minutes' ] ?>"
+                           value="<?php echo esc_attr($campaign->restartDuration[ 'minutes' ]) ?>"
                     >
 
                 </label>
@@ -216,7 +216,7 @@ global $post_id;
                     <input type="number"
                            class="hurrytimer-duration"
                            name="restart_duration[seconds]"
-                           value="<?php echo $campaign->restartDuration[ 'seconds' ] ?>"
+                           value="<?php echo esc_attr($campaign->restartDuration[ 'seconds' ]) ?>"
                     >
 
                 </label>
@@ -240,13 +240,13 @@ global $post_id;
                 </label></td>
             <td>
                 <div>
-                    <button type="button" data-id="<?php echo $post_id ?>"
-                            data-cookie="<?php echo Cookie_Detection::cookieName( $post_id ) ?>"
-                            data-url="<?php echo $resetCampaignCurrentAdminUrl ?>" class="button button-default"
+                    <button type="button" data-id="<?php echo esc_attr($post_id) ?>"
+                            data-cookie="<?php echo esc_attr(Cookie_Detection::cookieName( $post_id )) ?>"
+                            data-url="<?php echo esc_url($resetCampaignCurrentAdminUrl) ?>" class="button button-default"
                             id="hurrytResetCurrent">Only for me
                     </button>
                     &nbsp;
-                    <button type="button" data-url="<?php echo $resetCampaignAllVisitorsUrl ?>"
+                    <button type="button" data-url="<?php echo esc_url($resetCampaignAllVisitorsUrl) ?>"
                             class="button button-default" id="hurrytResetAll">For all visitors...
                     </button>
                 </div>

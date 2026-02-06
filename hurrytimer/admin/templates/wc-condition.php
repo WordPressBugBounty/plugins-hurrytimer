@@ -6,7 +6,7 @@ $conditionId = uniqid('condition_');
 <div class="hurryt-wc-condition hurryt-flex hurryt-items-center hurryt-mb-2" data-condition-id="<?php echo $conditionId ?>" >
     <select name="wc_conditions[<?php echo $groupId ?>][<?php echo $conditionId ?>][key]" class="hurryt-w-1/4 hurryt-mr-2 hurryt-wc-condition-key">
         <?php foreach ($conditions as $condition): ?>
-            <option value="<?php echo $condition['key'] ?>" <?php echo selected($selected['key'], $condition['key']) ?>
+            <option value="<?php echo esc_attr($condition['key']) ?>" <?php echo selected($selected['key'], $condition['key']) ?>
             ><?php echo $condition['name'] ?></option>
         <?php endforeach;    ?>
     </select>
@@ -38,7 +38,7 @@ $conditionId = uniqid('condition_');
         ?>
         <select name="wc_conditions[<?php echo $groupId ?>][<?php echo $conditionId ?>][value]" class="hurryt-w-1/4  hurryt-mr-2 hurryt-wc-condition-value">
             <?php foreach ($values as $value): ?>
-                <option value="<?php echo $value['id'] ?>" <?php echo isset($active) && $active['value'] == $value['id'] ? 'selected': '' ?>
+                <option value="<?php echo esc_attr($value['id']) ?>" <?php echo isset($active) && $active['value'] == $value['id'] ? 'selected': '' ?>
                 ><?php echo $value['name'] ?></option>
             <?php endforeach; ?>
         </select>
@@ -48,7 +48,7 @@ $conditionId = uniqid('condition_');
         <?php
         if ($selected['type'] === 'number'):
             ?>
-            <input type="number"  value="<?php echo isset($active) ? $active['value'] : '' ?>" name="wc_conditions[<?php echo $groupId ?>][<?php echo $conditionId ?>][value]"  class="hurryt-w-1/4  hurryt-mr-2 hurryt-wc-condition-value" />
+            <input type="number"  value="<?php echo esc_attr(isset($active) ? $active['value'] : '') ?>" name="wc_conditions[<?php echo $groupId ?>][<?php echo $conditionId ?>][value]"  class="hurryt-w-1/4  hurryt-mr-2 hurryt-wc-condition-value" />
         <?php
         endif;
     endif;

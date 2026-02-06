@@ -208,6 +208,11 @@ class CampaignSettings
 
     public function save_settings($post_id)
     {
+        // Check for CSRF protection
+        if (!isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'], 'update-post_' . $post_id)) {
+            return;
+        }
+        
         if ((defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
             || (!isset($_POST['post_ID']) || $post_id != $_POST['post_ID'])
             || (!current_user_can('publish_posts') || !current_user_can('edit_post', $post_id))

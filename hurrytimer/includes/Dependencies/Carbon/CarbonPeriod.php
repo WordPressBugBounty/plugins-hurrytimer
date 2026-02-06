@@ -236,7 +236,7 @@ class CarbonPeriod implements Iterator, Countable
     public static function createFromArray(array $params)
     {
         // PHP 5.3 equivalent of new static(...$params).
-        $reflection = new ReflectionClass(get_class());
+        $reflection = new ReflectionClass(static::class);
         /** @var static $instance */
         $instance = $reflection->newInstanceArgs($params);
 

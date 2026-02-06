@@ -788,6 +788,8 @@ class Campaign
 
     public function setHeadline($value)
     {
+        // Sanitize headline to prevent XSS while allowing basic HTML
+        $value = wp_kses_post($value);
         $this->set_prop('_hurryt_headline', $value);
     }
 
@@ -851,6 +853,8 @@ class Campaign
      */
     public function setEndDatetime($date)
     {
+        // Sanitize the date input to prevent XSS
+        $date = sanitize_text_field($date);
         $this->set_prop('end_datetime', $date ?: $this->defaultEndDatetime());
     }
 
@@ -1793,6 +1797,10 @@ class Campaign
      */
     public function setLabels($labels)
     {
+        // Sanitize each label to prevent XSS
+        if (is_array($labels)) {
+            $labels = array_map('sanitize_text_field', $labels);
+        }
         $labels = wp_parse_args($labels, $this->labels);
         update_post_meta($this->id, 'labels', $labels);
     }

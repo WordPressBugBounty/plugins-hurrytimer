@@ -96,7 +96,7 @@
                         <input
                             type="text"
                             name="labels[days]"
-                            value="<?php echo $campaign->labels['days'] ?>">
+                            value="<?php echo esc_attr($campaign->labels['days']) ?>">
                     </div>
                 </div>
                 <div class="hurrytimer-style-control-field">
@@ -107,7 +107,7 @@
                         <input
                             type="text"
                             name="labels[hours]"
-                            value="<?php echo $campaign->labels['hours'] ?>">
+                            value="<?php echo esc_attr($campaign->labels['hours']) ?>">
                     </div>
                 </div>
                 <div class="hurrytimer-style-control-field">
@@ -118,7 +118,7 @@
                         <input
                             type="text"
                             name="labels[minutes]"
-                            value="<?php echo $campaign->labels['minutes'] ?>">
+                            value="<?php echo esc_attr($campaign->labels['minutes']) ?>">
                     </div>
                 </div>
                 <div class="hurrytimer-style-control-field">
@@ -129,7 +129,7 @@
                         <input
                             type="text"
                             name="labels[seconds]"
-                            value="<?php echo $campaign->labels['seconds'] ?>">
+                            value="<?php echo esc_attr($campaign->labels['seconds']) ?>">
                     </div>
                 </div>
             </div>

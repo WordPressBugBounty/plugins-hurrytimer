@@ -3,11 +3,11 @@ Contributors: nlemsieh
 Donate link: https://www.paypal.me/nlemsieh
 Tags: countdown timer, sales countdown timer, evergreen countdown, recurring countdown timer, flash sale timer, urgency timer, scarcity timer, limited time offer timer, FOMO plugin, WooCommerce countdown, WooCommerce sale timer, WordPress countdown timer
 Requires at least: 4.0
-Tested up to: 6.8
+Tested up to: 6.9
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Requires PHP: 5.6
-Stable tag: 2.14.0
+Stable tag: 2.14.3
 
 Create unlimited urgency and scarcity countdown timers for WordPress and WooCommerce to boost conversions and sales instantly.
 
@@ -214,7 +214,23 @@ We improve HurryTimer continuously to fit your needs, if you have a feature requ
 
 == Changelog ==
 
- 2.14.0 =
+= 2.14.3 =
+
+* Security hardening and improvements.
+* Minor bugfixes.
+
+= 2.14.2 =
+
+* Improved compatibility with PHP 8.4
+* Declared compatibility with WooCommerce 10.4
+
+
+= 2.14.1 =
+
+* Declared compatibility with WooCommerce 10.3
+
+
+= 2.14.0 =
 
 * Temporarily removed the "Change stock status" expiry action as a precaution to prevent unauthorized product stock changes.
 * Minor bugfixes

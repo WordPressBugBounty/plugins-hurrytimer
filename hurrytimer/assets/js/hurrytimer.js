@@ -119,14 +119,14 @@ var HurrytimerAction = /*#__PURE__*/function () {
         appliedCoupons.each(function () {
           var couponCode = jQuery(this).find('.woocommerce-remove-coupon').data('coupon');
 
-          if (couponCode.toLowerCase() === code.toLowerCase()) {
+          if (couponCode && typeof couponCode === 'string' && couponCode.trim().toLowerCase() === code.trim().toLowerCase()) {
             isCouponExpired = true;
             return false;
           }
         });
 
         if (isCouponExpired) {
-          var errorHtml = '<ul class="woocommerce-error" role="alert"><li>' + hurrytimer_ajax_object.invalid_checkout_coupon_message.replace('""', code) + '</li></ul>';
+          var errorHtml = '<ul class="woocommerce-error" role="alert"><li>' + message + '</li></ul>';
           var noticeGroup = jQuery('.woocommerce-NoticeGroup-checkout');
 
           if (noticeGroup.length) {
@@ -188,7 +188,7 @@ var HurrytimerAction = /*#__PURE__*/function () {
           var searchParams = new URLSearchParams(body);
           var couponCode = searchParams.get('coupon_code');
 
-          if (typeof couponCode === 'string' && couponCode.toLowerCase() === code.toLowerCase()) {
+          if (typeof couponCode === 'string' && couponCode.trim().toLowerCase() === code.trim().toLowerCase()) {
             jQuery('.woocommerce-error').remove();
             var $target = jQuery('.woocommerce-notices-wrapper:first') || jQuery('.cart-empty').closest('.woocommerce') || jQuery('.woocommerce-cart-form');
             $target.prepend("<ul class=\"woocommerce-error\" role=\"alert\"><li>".concat(message, "</li></ul>"));
@@ -205,7 +205,7 @@ var HurrytimerAction = /*#__PURE__*/function () {
             if (req.path === '/wc/store/v1/cart/apply-coupon') {
               var couponCode = req.body.code;
 
-              if (typeof couponCode === 'string' && couponCode.toLowerCase() === code.toLowerCase()) {
+              if (couponCode && typeof couponCode === 'string' && couponCode.trim().toLowerCase() === code.trim().toLowerCase()) {
                 abortController.abort();
                 throw new Error(message);
               }
@@ -219,7 +219,7 @@ var HurrytimerAction = /*#__PURE__*/function () {
 
       jQuery.ajaxPrefilter(function (opts, originOpts, jqXHR) {
         if (opts.url.indexOf('wc-ajax=apply_coupon') === -1) return;
-        if (typeof originOpts.data.coupon_code !== 'string' || typeof code !== 'string' || originOpts.data.coupon_code.toLowerCase() !== code.toLowerCase()) return;
+        if (!originOpts.data.coupon_code || typeof originOpts.data.coupon_code !== 'string' || typeof code !== 'string' || originOpts.data.coupon_code.trim().toLowerCase() !== code.trim().toLowerCase()) return;
         jqXHR.abort();
         jQuery('.woocommerce-error').remove();
         var $target = jQuery('.woocommerce-notices-wrapper:first') || jQuery('.cart-empty').closest('.woocommerce') || jQuery('.woocommerce-cart-form');
@@ -510,7 +510,7 @@ var HurrytimerCampaign = /*#__PURE__*/function () {
 
             if (this.config.run_in_background) {
               if (action['id'] == this.actionsOptions.expire_coupon) {
-                actionManager.expireCoupon(action['coupon'], hurrytimer_ajax_object.expire_coupon_message);
+                actionManager.expireCoupon(action['coupon'], hurrytimer_ajax_object.expire_coupon_message.replace('%s', action['coupon']));
               }
             } else {
               switch (action['id']) {

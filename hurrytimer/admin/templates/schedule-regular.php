@@ -8,7 +8,7 @@
                     <input type="text" name="end_datetime" autocomplete="off"
                            id="hurrytimer-end-datetime"
                            class="hurrytimer-datepicker hurryt-w-full"
-                           value="<?php echo $campaign->endDatetime ?>"
+                           value="<?php echo esc_attr($campaign->endDatetime) ?>"
                     >
                 </label>
             </td>

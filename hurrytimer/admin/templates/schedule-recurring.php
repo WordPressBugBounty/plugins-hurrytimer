@@ -39,7 +39,7 @@ namespace Hurrytimer;
             <td>
                 <div class="hurryt-flex">
                     <div class="hurryt-w-16">
-                        <input type="number" min="1" name="recurring_interval" value="<?php echo $campaign->recurringInterval ?>" id="hurrytRecurringInterval" />
+                        <input type="number" min="1" name="recurring_interval" value="<?php echo esc_attr($campaign->recurringInterval) ?>" id="hurrytRecurringInterval" />
                     </div>
                     <div class="hurryt-flex-grow">
                         <select name="recurring_frequency" id="hurrytRecurringFrequency" class="hurryt-w-full">
@@ -72,7 +72,7 @@ namespace Hurrytimer;
             <td>
                <div id="ht-recurring-duration-option">
                <label >
-                    <input type="radio" value="none" name="recurring_duration_option" <?php checked($campaign->recurringDurationOption, 'none') ?> /><span id="ht-monthly-recur-interval"><?php echo $campaign->recurringInterval ?></span> month(s)
+                    <input type="radio" value="none" name="recurring_duration_option" <?php checked($campaign->recurringDurationOption, 'none') ?> /><span id="ht-monthly-recur-interval"><?php echo esc_html($campaign->recurringInterval) ?></span> month(s)
                 </label>&nbsp;
                 <label >
                     <input type="radio" value="custom" name="recurring_duration_option" <?php checked($campaign->recurringDurationOption, 'custom') ?> />Custom...
@@ -81,19 +81,19 @@ namespace Hurrytimer;
                 <div class="hurryt-flex" id="ht-recurring-duration">
                     <label class="hurryt-uppercase hurryt-text-gray-700 hurryt-text-xs   hurryt-pr-2">
                         <?php _e("Days", "hurrytimer") ?>
-                        <input type="number" class="hurrytimer-duration" name="recurring_duration[]" id="hurrytRecurringDays" class="hurryt-w-full" min="0" value="<?php echo $campaign->recurringDuration[0] ?>">
+                        <input type="number" class="hurrytimer-duration" name="recurring_duration[]" id="hurrytRecurringDays" class="hurryt-w-full" min="0" value="<?php echo esc_attr($campaign->recurringDuration[0]) ?>">
                     </label>
                     <label class="hurryt-uppercase hurryt-text-gray-700 hurryt-text-xs hurryt-pr-2">
                         <?php _e("Hours", "hurrytimer") ?>
-                        <input type="number" name="recurring_duration[]" id="hurrytRecurringHours" class="hurryt-w-full" min="0" value="<?php echo $campaign->recurringDuration[1] ?>">
+                        <input type="number" name="recurring_duration[]" id="hurrytRecurringHours" class="hurryt-w-full" min="0" value="<?php echo esc_attr($campaign->recurringDuration[1]) ?>">
                     </label>
                     <label class="hurryt-uppercase hurryt-text-gray-700 hurryt-text-xs  hurryt-pr-2">
                         <?php _e("minutes", "hurrytimer") ?>
-                        <input type="number" id="hurrytRecurringMinutes" name="recurring_duration[]" class="hurryt-w-full" min="0" value="<?php echo $campaign->recurringDuration[2] ?>">
+                        <input type="number" id="hurrytRecurringMinutes" name="recurring_duration[]" class="hurryt-w-full" min="0" value="<?php echo esc_attr($campaign->recurringDuration[2]) ?>">
                     </label>
                     <label class="hurryt-uppercase hurryt-text-gray-700 hurryt-text-xs">
                         <?php _e("seconds", "hurrytimer") ?>
-                        <input type="number" id="hurrytRecurringSeconds" name="recurring_duration[]" class="hurryt-w-full" min="0" value="<?php echo $campaign->recurringDuration[3] ?>">
+                        <input type="number" id="hurrytRecurringSeconds" name="recurring_duration[]" class="hurryt-w-full" min="0" value="<?php echo esc_attr($campaign->recurringDuration[3]) ?>">
                     </label>
                 </div>
             </td>
@@ -106,19 +106,19 @@ namespace Hurrytimer;
                 <div class="hurryt-flex" >
                     <label class="hurryt-uppercase hurryt-text-gray-700 hurryt-text-xs hurryt-pr-2">
                         <?php _e("Days", "hurrytimer") ?>
-                        <input type="number" class="hurrytimer-duration" name="recurring_pause_duration[days]" id="hurrytRecurringPauseDays" class="hurryt-w-full" min="0" value="<?php echo $campaign->recurringPauseDuration['days'] ?>">
+                        <input type="number" class="hurrytimer-duration" name="recurring_pause_duration[days]" id="hurrytRecurringPauseDays" class="hurryt-w-full" min="0" value="<?php echo esc_attr($campaign->recurringPauseDuration['days']) ?>">
                     </label>
                     <label class="hurryt-uppercase hurryt-text-gray-700 hurryt-text-xs hurryt-pr-2">
                         <?php _e("Hours", "hurrytimer") ?>
-                        <input type="number" name="recurring_pause_duration[hours]" id="hurrytRecurringPauseHours" class="hurryt-w-full" min="0" value="<?php echo $campaign->recurringPauseDuration['hours'] ?>">
+                        <input type="number" name="recurring_pause_duration[hours]" id="hurrytRecurringPauseHours" class="hurryt-w-full" min="0" value="<?php echo esc_attr($campaign->recurringPauseDuration['hours']) ?>">
                     </label>
                     <label class="hurryt-uppercase hurryt-text-gray-700 hurryt-text-xs  hurryt-pr-2">
                         <?php _e("minutes", "hurrytimer") ?>
-                        <input type="number" id="hurrytRecurringPauseMinutes" name="recurring_pause_duration[minutes]" class="hurryt-w-full" min="0" value="<?php echo $campaign->recurringPauseDuration['minutes'] ?>">
+                        <input type="number" id="hurrytRecurringPauseMinutes" name="recurring_pause_duration[minutes]" class="hurryt-w-full" min="0" value="<?php echo esc_attr($campaign->recurringPauseDuration['minutes']) ?>">
                     </label>
                     <label class="hurryt-uppercase hurryt-text-gray-700 hurryt-text-xs">
                         <?php _e("seconds", "hurrytimer") ?>
-                        <input type="number" id="hurrytRecurringPauseSeconds" name="recurring_pause_duration[seconds]" class="hurryt-w-full" min="0" value="<?php echo $campaign->recurringPauseDuration['seconds'] ?>">
+                        <input type="number" id="hurrytRecurringPauseSeconds" name="recurring_pause_duration[seconds]" class="hurryt-w-full" min="0" value="<?php echo esc_attr($campaign->recurringPauseDuration['seconds']) ?>">
                     </label>
                 </div>
             </td>
@@ -137,7 +137,7 @@ namespace Hurrytimer;
                     ?>
                     <?php foreach ($weekdays as $k => $v) : ?>
                         <label for="" class="hurryt-block hurryt-mb-3 hurryt-w-1/3"><input type="checkbox" <?php echo in_array($k, $campaign->recurringDays)
-                                                                                                                ? 'checked' : '' ?> name="recurring_days[]" value="<?php echo $k ?>"><?php echo $v ?>
+                                                                                                                ? 'checked' : '' ?> name="recurring_days[]" value="<?php echo esc_attr($k) ?>"><?php echo esc_html($v) ?>
                         </label>
                     <?php endforeach; ?>
                 </div>
@@ -163,7 +163,7 @@ namespace Hurrytimer;
             </td>
             <td>
                 <label for="hurrytimer-end-datetime" class="date hurryt-w-full">
-                    <input type="text" name="recurring_start_time" autocomplete="off" class="hurrytimer-datepicker hurryt-w-full" placeholder="Select Date/Time" value="<?php echo $campaign->recurringStartTime ?>">
+                    <input type="text" name="recurring_start_time" autocomplete="off" class="hurrytimer-datepicker hurryt-w-full" placeholder="Select Date/Time" value="<?php echo esc_attr($campaign->recurringStartTime) ?>">
                 </label>
             </td>
         </tr>
@@ -196,11 +196,11 @@ namespace Hurrytimer;
                     <label for="" class="hurryt-mb-2"><input type="radio" name="recurring_end" value="<?php echo C::RECURRING_END_OCCURRENCES ?>" <?php echo checked(
                                                                                                                                                         $campaign->recurringEnd,
                                                                                                                                                         C::RECURRING_END_OCCURRENCES
-                                                                                                                                                    ) ?>>After <input type="text" name="recurring_count" autocomplete="off" id="hurrytimer-recurring_end_date" style="width: 3em" value="<?php echo $campaign->recurringCount ?>"> recurrences</label>
+                                                                                                                                                    ) ?>>After <input type="text" name="recurring_count" autocomplete="off" id="hurrytimer-recurring_end_date" style="width: 3em" value="<?php echo esc_attr($campaign->recurringCount) ?>"> recurrences</label>
                     <label for="" class="hurryt-mb-2 date"><input type="radio" name="recurring_end" value="<?php echo C::RECURRING_END_TIME ?>" <?php echo checked(
                                                                                                                                                     $campaign->recurringEnd,
                                                                                                                                                     C::RECURRING_END_TIME
-                                                                                                                                                ) ?>>On <input type="text" name="recurring_until" autocomplete="off" class="hurrytimer-datepicker" placeholder="Select Date/Time" style="width: 12em" value="<?php echo $campaign->recurringUntil ?>"></label>
+                                                                                                                                                ) ?>>On <input type="text" name="recurring_until" autocomplete="off" class="hurrytimer-datepicker" placeholder="Select Date/Time" style="width: 12em" value="<?php echo esc_attr($campaign->recurringUntil) ?>"></label>
                 </div>
             </td>
         </tr>
