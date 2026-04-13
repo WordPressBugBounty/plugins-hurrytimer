@@ -20,7 +20,7 @@
  * Text Domain:       hurrytimer
  * Domain Path:       /languages
  * WC requires at least: 3.0.0
- * WC tested up to: 10.5
+ * WC tested up to: 10.6
  */
 
 
