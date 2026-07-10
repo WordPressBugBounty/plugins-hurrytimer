@@ -74,8 +74,8 @@ class ActionManager
         }
 
         if ( !empty( trim( $url ) ) ) {
-            wp_redirect( $url );
-            return;
+            wp_redirect( esc_url_raw( $url ) );
+            exit;
         }
     }
 

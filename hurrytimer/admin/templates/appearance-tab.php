@@ -14,7 +14,7 @@
         <?php echo $campaign->enableSticky === C::YES ? '<div class="hurrytimer-sticky-inner">'
             : ''; ?>
         <div class="hurrytimer-campaign">
-            <div class="hurrytimer-headline"><?php echo $campaign->headline; ?></div>
+            <div class="hurrytimer-headline"><?php echo wp_kses_post($campaign->headline); ?></div>
             <div class="hurrytimer-timer">
             <div class="hurrytimer-timer-block" data-block="months">
                     <div class="hurrytimer-timer-digit">01</div>

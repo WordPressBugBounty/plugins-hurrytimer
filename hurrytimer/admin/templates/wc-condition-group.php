@@ -1,7 +1,7 @@
 <?php
 $groupId = isset($groupId) && !empty($groupId) ? $groupId :  uniqid('group_');
 ?>
-<div class="hurryt-wc-condition-group " data-group-id="<?php echo $groupId ?>">
+<div class="hurryt-wc-condition-group " data-group-id="<?php echo esc_attr($groupId) ?>">
     <?php if(isset($conditions) && !empty($conditions)): foreach($conditions as $active):
         $selected = hurryt_wc_conditions()[$active['key']];
         ?>

@@ -232,7 +232,7 @@ class IP_Detection
             $where[ 'client_ip_address' ] = $this->fetchCurrentUserIpAddress();
             $wpdb->delete( $this->table, $where );
         } else {
-            $wpdb->query( "delete from {$this->table}" );
+            $wpdb->query( "DELETE FROM `{$this->table}`" );
         }
       
     }

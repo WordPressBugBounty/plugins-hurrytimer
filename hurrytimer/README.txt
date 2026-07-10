@@ -3,11 +3,11 @@ Contributors: nlemsieh
 Donate link: https://www.paypal.me/nlemsieh
 Tags: countdown timer, sales countdown timer, evergreen countdown, recurring countdown timer, flash sale timer, urgency timer, scarcity timer, limited time offer timer, FOMO plugin, WooCommerce countdown, WooCommerce sale timer, WordPress countdown timer
 Requires at least: 4.0
-Tested up to: 6.9
+Tested up to: 7.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Requires PHP: 5.6
-Stable tag: 2.14.3
+Stable tag: 2.15.0
 
 Create unlimited urgency and scarcity countdown timers for WordPress and WooCommerce to boost conversions and sales instantly.
 
@@ -86,6 +86,23 @@ Recurring timers are perfect for campaigns and offers that happen regularly and 
 - Monthly promotions that recur on specific dates  
 
 This feature helps create a persistent sense of urgency while automating timer resets to match your marketing calendar or business rules.  
+
+
+= 📅 Multiple Deadlines =  
+
+Set a list of **specific dates** and let the countdown automatically cycle through them in order — no manual updates needed.  
+Unlike recurring timers that repeat at fixed intervals, multiple deadlines let you define **irregular dates** such as:  
+- Jan 14, Feb 22, Mar 9, Apr 18…  
+
+**What is it used for?**  
+This is perfect when your deadlines don't follow a regular pattern. Examples include:  
+- Monthly flash sales with irregular end dates  
+- Course or webinar enrollment closing dates throughout the year  
+- Event registration cutoffs on specific dates  
+- Seasonal promotions — set 12 dates at the start of the year and let it run automatically  
+
+Each deadline can also have its own **custom headline** that overrides the default while counting down to that date.  
+After the last deadline expires, the configured expiry actions run as usual.  
 
 
 = 🎟️ Expire WooCommerce Coupons =  
@@ -213,6 +230,10 @@ We improve HurryTimer continuously to fit your needs, if you have a feature requ
 
 
 == Changelog ==
+
+= 2.15.0 =
+
+* New: Multiple Deadlines (Pro) — set a list of specific dates and let the countdown cycle through them automatically.
 
 = 2.14.3 =
 

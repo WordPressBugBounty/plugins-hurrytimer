@@ -134,10 +134,12 @@ class Admin {
                 $source = isset($_GET['source']) ? sanitize_text_field($_GET['source']) : '';
                 if ($source === 'list') {
                     // Redirect back to the list of campaigns
-                    wp_redirect(admin_url('edit.php?post_type=' . HURRYT_POST_TYPE));
+                    wp_safe_redirect(admin_url('edit.php?post_type=' . HURRYT_POST_TYPE));
+                    exit;
                 } else {
                     // Redirect to the newly created campaign
-                    wp_redirect(admin_url('post.php?action=edit&post=' . $new_post_id));
+                    wp_safe_redirect(admin_url('post.php?action=edit&post=' . $new_post_id));
+                    exit;
                 }
             }
         }
@@ -164,6 +166,11 @@ class Admin {
     }
     public function search_wc_coupon() {
         check_ajax_referer('hurryt-admin', 'nonce');
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(__('You do not have permission to perform this action.', 'hurrytimer'), 403);
+        }
+
         $search  = isset($_GET['search']) ? sanitize_text_field($_GET['search']) : '';
         $exclude = isset($_GET['exclude']) ? array_map('intval', (array)$_GET['exclude']) : [];
 
@@ -181,7 +188,7 @@ class Admin {
                 "text" => $item->post_title,
             ];
         }, $items);
-        exit(json_encode(["results" => $results, "pagination" => true]));
+        wp_send_json(["results" => $results, "pagination" => true]);
     }
     public function dismiss_leave_review_ajax() {
         check_ajax_referer('hurryt-review-nonce', 'nonce');
@@ -732,8 +739,17 @@ class Admin {
         ) {
             $postId = intval($_GET['post']);
 
+            if (!current_user_can('edit_post', $postId)) {
+                wp_die(__('You do not have permission to perform this action.', 'hurrytimer'));
+            }
+
+            $scope = sanitize_text_field($_GET['hurryt-scope']);
+            if (!in_array($scope, ['admin', 'all'], true)) {
+                wp_die(__('Invalid scope specified.', 'hurrytimer'));
+            }
+
             $campaign = new EvergreenCampaign($postId);
-            $campaign->reset(sanitize_text_field($_GET['hurryt-scope']));
+            $campaign->reset($scope);
         }
     }
 

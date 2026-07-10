@@ -36623,6 +36623,15 @@
 .post-type-hurrytimer_countdown .hurrytimer-field-time {
   margin-top: 10px;
 }
+.post-type-hurrytimer_countdown .button .dashicons,
+.post-type-hurrytimer_countdown .button-small .dashicons {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+  line-height: 1;
+  vertical-align: middle;
+  margin-top: -2px;
+}
 .post-type-hurrytimer_countdown #hurrytimer-actions .description {
   margin-left: 5px;
 }
@@ -36787,6 +36796,239 @@
 .post-type-hurrytimer_countdown #hurrytimer-tabcontent-woocommerce table td {
   padding-left: 0;
   padding-right: 0;
+}
+.post-type-hurrytimer_countdown .hurryt-deadlines-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+  max-width: 560px;
+}
+.post-type-hurrytimer_countdown .hurryt-deadline-item {
+  background: #fff;
+  border: 1px solid #dcdcde;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: box-shadow 0.15s ease;
+}
+.post-type-hurrytimer_countdown .hurryt-deadline-item:hover {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+.post-type-hurrytimer_countdown .hurryt-deadline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f6f7f7;
+  border-bottom: 1px solid #dcdcde;
+  padding: 6px 12px;
+}
+.post-type-hurrytimer_countdown .hurryt-deadline-number {
+  font-size: 12px;
+  font-weight: 600;
+  color: #50575e;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.post-type-hurrytimer_countdown .hurryt-deadline-number::before {
+  content: "#";
+}
+.post-type-hurrytimer_countdown .hurryt-deadline-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 4px;
+  color: #a7aaad;
+  border-radius: 3px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  transition: color 0.1s ease, background 0.1s ease;
+}
+.post-type-hurrytimer_countdown .hurryt-deadline-remove .dashicons {
+  font-size: 15px;
+  width: 15px;
+  height: 15px;
+}
+.post-type-hurrytimer_countdown .hurryt-deadline-remove:hover {
+  color: #d63638;
+  background: #fce8e8;
+}
+.post-type-hurrytimer_countdown .hurryt-deadline-fields {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  flex-wrap: wrap;
+}
+.post-type-hurrytimer_countdown .hurryt-deadline-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 180px;
+}
+.post-type-hurrytimer_countdown .hurryt-deadline-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #50575e;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.post-type-hurrytimer_countdown .hurryt-deadline-optional {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #a7aaad;
+  font-size: 11px;
+}
+.post-type-hurrytimer_countdown .hurryt-deadline-input {
+  width: 100% !important;
+  box-sizing: border-box;
+}
+.post-type-hurrytimer_countdown .hurryt-add-deadline-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.post-type-hurrytimer_countdown .hurryt-add-deadline-btn .dashicons {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+  margin-top: -1px;
+}
+.post-type-hurrytimer_countdown .hurryt-toggle-deadlines-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #2271b1;
+  text-decoration: none;
+  font-size: 13px;
+}
+.post-type-hurrytimer_countdown .hurryt-toggle-deadlines-link .dashicons {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+}
+.post-type-hurrytimer_countdown .hurryt-toggle-deadlines-link:hover {
+  color: #135e96;
+  text-decoration: underline;
+}
+.post-type-hurrytimer_countdown .hurryt-pro-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.post-type-hurrytimer_countdown .hurryt-pro-dialog {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  max-width: 440px;
+  width: 90%;
+  padding: 32px;
+  position: relative;
+  text-align: center;
+  animation: hurryt-dialog-in 0.2s ease-out;
+}
+@keyframes hurryt-dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+.post-type-hurrytimer_countdown .hurryt-pro-dialog-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #a7aaad;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: color 0.1s, background 0.1s;
+}
+.post-type-hurrytimer_countdown .hurryt-pro-dialog-close:hover {
+  color: #1d2327;
+  background: #f0f0f0;
+}
+.post-type-hurrytimer_countdown .hurryt-pro-dialog-icon {
+  margin-bottom: 8px;
+}
+.post-type-hurrytimer_countdown .hurryt-pro-dialog-icon .dashicons {
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
+  color: #2271b1;
+}
+.post-type-hurrytimer_countdown .hurryt-pro-dialog-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #1d2327;
+}
+.post-type-hurrytimer_countdown .hurryt-pro-dialog-title .hurryt-badge-pro {
+  vertical-align: middle;
+  font-size: 10px;
+  margin-left: 4px;
+}
+.post-type-hurrytimer_countdown .hurryt-pro-dialog-desc {
+  font-size: 13px;
+  color: #50575e;
+  line-height: 1.6;
+  margin: 0 0 20px 0;
+}
+.post-type-hurrytimer_countdown .hurryt-pro-dialog-usecases {
+  text-align: left;
+  margin: 0 0 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.post-type-hurrytimer_countdown .hurryt-pro-dialog-usecase {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: #2c3338;
+  line-height: 1.4;
+}
+.post-type-hurrytimer_countdown .hurryt-pro-dialog-usecase .dashicons {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #2271b1;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.post-type-hurrytimer_countdown .hurryt-pro-dialog-actions .button-hero {
+  font-size: 14px;
+  padding: 8px 28px;
+  height: auto;
+}
+.post-type-hurrytimer_countdown .hurryt-pro-dialog-learn-more {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #50575e;
+  text-decoration: none;
+}
+.post-type-hurrytimer_countdown .hurryt-pro-dialog-learn-more:hover {
+  color: #2271b1;
 }
 .post-type-hurrytimer_countdown .hurryt-button {
   text-align: center;

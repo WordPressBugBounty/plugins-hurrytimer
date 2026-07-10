@@ -515,6 +515,15 @@ class Campaign
     public $evergreenEndTime = '';
     public $evergreenEndType = 'duration';
 
+    /**
+     * Regular mode date ranges.
+     * Each entry: ['start' => 'Y-m-d h:i A', 'end' => 'Y-m-d h:i A']
+     * When only one range exists (or empty), falls back to the single endDatetime field.
+     *
+     * @var array
+     */
+    public $dateRanges = [];
+
     public function __construct($id)
     {
         $this->recurringStartTime = Carbon::now(hurryt_tz($this->getTimezone()))->format('Y-m-d h:i A');
@@ -709,7 +718,12 @@ class Campaign
     public function storeSettings($data)
     {
         if (!hurrytimer_allow_unfiltered_html()) {
-            $data = wp_kses_post_deep($data);
+            // Exclude fields that have their own sanitization to avoid double-processing
+            // which can strip valid HTML (e.g. <a> tags in headline).
+            $html_fields = ['headline'];
+            $reserved    = array_intersect_key($data, array_flip($html_fields));
+            $data        = wp_kses_post_deep(array_diff_key($data, array_flip($html_fields)));
+            $data        = array_merge($data, $reserved);
         }
 
         foreach ($data as $prop => $value) {
@@ -731,6 +745,10 @@ class Campaign
         if (!isset($data['sticky_bar_pages'])) {
             $this->setStickyBarPages([]);
         }
+        // Only use multiple deadlines if the toggle is active
+        if (isset($data['use_multiple_deadlines']) && $data['use_multiple_deadlines'] === '0') {
+            $this->setDateRanges([]);
+        }
 
         CSS_Builder::get_instance()->generate_css();
     }
@@ -743,9 +761,9 @@ class Campaign
      */
     public function setMode($mode)
     {
-        // if ($mode == C::MODE_RECURRING) {
-        //     return;
-        // }
+        if ($mode == C::MODE_RECURRING) {
+            return;
+        }
         $this->set_prop('mode', $mode);
     }
     //endRemoveIf(pro)
@@ -788,9 +806,159 @@ class Campaign
 
     public function setHeadline($value)
     {
-        // Sanitize headline to prevent XSS while allowing basic HTML
-        $value = wp_kses_post($value);
+        $value = $this->sanitize_headline_html( $value );
         $this->set_prop('_hurryt_headline', $value);
+    }
+
+    /**
+     * Custom HTML sanitizer for the headline field.
+     *
+     * Allowed tags: span, div, a, input, br, s, p, strong, em
+     * - style, class, id allowed on visual tags (CSS values are preserved as-is
+     *   except javascript:/expression()/vbscript: patterns are removed)
+     * - <a>: href (blocked if javascript:), target, rel
+     * - <input>: type, value, style (no event handlers)
+     * - All on* event handler attributes stripped from every tag
+     * - Dangerous tags (script, iframe, object, embed, form, link, meta) stripped entirely
+     */
+    private function sanitize_headline_html( $value ) {
+        // Strip dangerous block-level tags and their contents.
+        $value = preg_replace(
+            '#<(script|iframe|object|embed|form|link|meta)[^>]*>.*?</\1>#is',
+            '',
+            $value
+        );
+        // Also strip self-closing variants.
+        $value = preg_replace(
+            '#<(script|iframe|object|embed|form|link|meta)[^>]*/?\s*>#is',
+            '',
+            $value
+        );
+
+        $allowed_tags = [ 'span', 'div', 'a', 'input', 'img', 'i', 'u', 'b', 'small', 'sup', 'sub', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'br', 's', 'p', 'strong', 'em' ];
+
+        // Use DOMDocument to walk and filter the fragment.
+        $doc = new \DOMDocument();
+        // Suppress warnings from malformed HTML; wrap in a root node.
+        @$doc->loadHTML(
+            '<?xml encoding="utf-8"?><div id="__hurrytimer_root__">' . $value . '</div>',
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
+
+        $root = $doc->getElementById('__hurrytimer_root__');
+        if ( ! $root ) {
+            return '';
+        }
+
+        $this->_sanitize_headline_node( $root, $allowed_tags );
+
+        // Serialize only the inner HTML of our wrapper.
+        $html = '';
+        foreach ( $root->childNodes as $child ) {
+            $html .= $doc->saveHTML( $child );
+        }
+
+        return $html;
+    }
+
+    /**
+     * Recursively sanitize a DOM node for the headline field.
+     */
+    private function _sanitize_headline_node( \DOMNode $node, array $allowed_tags ) {
+        $remove = [];
+
+        foreach ( $node->childNodes as $child ) {
+            if ( $child->nodeType === XML_ELEMENT_NODE ) {
+                $tag = strtolower( $child->nodeName );
+
+                if ( ! in_array( $tag, $allowed_tags, true ) ) {
+                    // Replace disallowed tag with its children (unwrap).
+                    $remove[] = [ 'node' => $child, 'unwrap' => true ];
+                    continue;
+                }
+
+                // Sanitize attributes.
+                $attrs_to_remove = [];
+                foreach ( $child->attributes as $attr ) {
+                    $name  = strtolower( $attr->name );
+                    $val   = $attr->value;
+
+                    // Strip all event handlers.
+                    if ( strncmp( $name, 'on', 2 ) === 0 ) {
+                        $attrs_to_remove[] = $name;
+                        continue;
+                    }
+
+                    // Per-tag attribute rules.
+                    if ( $tag === 'a' ) {
+                        if ( ! in_array( $name, [ 'href', 'target', 'rel', 'style', 'class', 'id' ], true ) ) {
+                            $attrs_to_remove[] = $name;
+                            continue;
+                        }
+                        if ( $name === 'href' && preg_match( '#^\s*javascript:#i', $val ) ) {
+                            $attrs_to_remove[] = $name;
+                            continue;
+                        }
+                    } elseif ( $tag === 'img' ) {
+                        if ( ! in_array( $name, [ 'src', 'alt', 'width', 'height', 'style', 'class', 'id' ], true ) ) {
+                            $attrs_to_remove[] = $name;
+                            continue;
+                        }
+                        if ( $name === 'src' ) {
+                            // Block javascript: protocol
+                            if ( preg_match( '#^\s*javascript\s*:#i', $val ) ) {
+                                $attrs_to_remove[] = $name;
+                                continue;
+                            }
+                            // Block data: URIs except safe image types (no SVG — can contain scripts)
+                            if ( preg_match( '#^\s*data\s*:#i', $val ) && ! preg_match( '#^\s*data\s*:\s*image/(png|jpe?g|gif|webp)\s*[;,]#i', $val ) ) {
+                                $attrs_to_remove[] = $name;
+                                continue;
+                            }
+                        }
+                    } elseif ( $tag === 'input' ) {
+                        if ( ! in_array( $name, [ 'type', 'value', 'style', 'class', 'id' ], true ) ) {
+                            $attrs_to_remove[] = $name;
+                            continue;
+                        }
+                    } else {
+                        // Visual tags: allow style, class, id only.
+                        if ( ! in_array( $name, [ 'style', 'class', 'id' ], true ) ) {
+                            $attrs_to_remove[] = $name;
+                            continue;
+                        }
+                    }
+
+                    // Sanitize style values: remove JS injection patterns.
+                    if ( $name === 'style' ) {
+                        $val = preg_replace( '#javascript\s*:#i', '', $val );
+                        $val = preg_replace( '#expression\s*\(#i', '', $val );
+                        $val = preg_replace( '#vbscript\s*:#i', '', $val );
+                        $child->setAttribute( 'style', $val );
+                    }
+                }
+
+                foreach ( $attrs_to_remove as $a ) {
+                    $child->removeAttribute( $a );
+                }
+
+                // Recurse.
+                $this->_sanitize_headline_node( $child, $allowed_tags );
+            }
+        }
+
+        // Unwrap or remove collected nodes.
+        foreach ( $remove as $item ) {
+            $n = $item['node'];
+            if ( $item['unwrap'] ) {
+                while ( $n->firstChild ) {
+                    $node->insertBefore( $n->firstChild, $n );
+                }
+            }
+            if ( $n->parentNode ) {
+                $n->parentNode->removeChild( $n );
+            }
+        }
     }
 
     public function is_published()
@@ -1861,6 +2029,158 @@ class Campaign
         return $endDate < $today;
     }
 
+    /**
+     * Check if a regular campaign with multiple deadlines has all deadlines expired.
+     *
+     * @return bool
+     */
+    public function is_all_date_ranges_expired()
+    {
+        $ranges = $this->getDateRanges();
+        if (empty($ranges)) {
+            return false; // No ranges means single-date mode, handled by is_one_time_expired
+        }
+
+        $now = Carbon::now(hurryt_tz($this->timezone));
+
+        foreach ($ranges as $range) {
+            if (empty($range['end'])) {
+                continue;
+            }
+            $end = Carbon::parse($range['end'], hurryt_tz($this->timezone));
+            if ($end->greaterThan($now)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Get the next upcoming deadline from the date ranges list.
+     *
+     * @return Carbon|null
+     */
+    public function getActiveDateRange()
+    {
+        $this->loadSettings();
+        $ranges = $this->getDateRanges();
+
+        if (empty($ranges)) {
+            return null;
+        }
+
+        $now = Carbon::now(hurryt_tz($this->timezone));
+
+        // Collect and sort end dates chronologically
+        $endDates = [];
+        foreach ($ranges as $range) {
+            if (empty($range['end'])) {
+                continue;
+            }
+            $endDates[] = Carbon::parse($range['end'], hurryt_tz($this->timezone));
+        }
+
+        usort($endDates, function ($a, $b) {
+            return $a->timestamp - $b->timestamp;
+        });
+
+        // Return the first deadline that hasn't passed yet
+        foreach ($endDates as $end) {
+            if ($end->greaterThan($now)) {
+                return $end;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Get all future deadlines (end dates that haven't expired yet), sorted chronologically.
+     *
+     * @return array Each entry: ['end' => Carbon, 'headline' => string]
+     */
+    public function getFutureDateRanges()
+    {
+        $this->loadSettings();
+        $ranges = $this->getDateRanges();
+
+        if (empty($ranges)) {
+            return [];
+        }
+
+        $now = Carbon::now(hurryt_tz($this->timezone));
+        $result = [];
+
+        foreach ($ranges as $range) {
+            if (empty($range['end'])) {
+                continue;
+            }
+            $end = Carbon::parse($range['end'], hurryt_tz($this->timezone));
+
+            if ($end->greaterThan($now)) {
+                $result[] = [
+                    'end'      => $end,
+                    'headline' => isset($range['headline']) ? $range['headline'] : '',
+                ];
+            }
+        }
+
+        usort($result, function ($a, $b) {
+            return $a['end']->timestamp - $b['end']->timestamp;
+        });
+
+        return $result;
+    }
+
+    /**
+     * Get date ranges array.
+     *
+     * @return array
+     */
+    public function getDateRanges()
+    {
+        $ranges = $this->get_prop('date_ranges', false);
+        if (!empty($ranges) && is_array($ranges)) {
+            return $ranges;
+        }
+        return [];
+    }
+
+    /**
+     * Set date ranges array.
+     *
+     * @param array|string $value
+     */
+    public function setDateRanges($value)
+    {
+        if (is_string($value)) {
+            $value = json_decode(stripslashes($value), true);
+        }
+        if (!is_array($value)) {
+            $value = [];
+        }
+        // Filter out entries without an end date
+        $value = array_filter($value, function ($entry) {
+            return !empty($entry['end']);
+        });
+        // Re-index
+        $value = array_values($value);
+        // Use update_post_meta directly to allow saving an empty array
+        update_post_meta($this->get_id(), 'date_ranges', $value);
+    }
+
+    /**
+     * Check if this regular campaign uses multiple deadlines.
+     *
+     * @return bool
+     */
+    public function hasMultipleDateRanges()
+    {
+        $ranges = $this->getDateRanges();
+        return count($ranges) > 1;
+    }
+
     public function is_sticky_dismissed()
     {
         return isset($_COOKIE[Cookie_Detection::COOKIE_PREFIX . $this->get_id() . '_dismissed'])
@@ -1948,6 +2268,9 @@ class Campaign
      */
     public function is_expired()
     {
+        if ($this->is_one_time() && $this->hasMultipleDateRanges()) {
+            return $this->is_all_date_ranges_expired();
+        }
         return ($this->is_one_time() && $this->is_one_time_expired())
             || ($this->is_recurring() && $this->is_recurring_expired());
     }

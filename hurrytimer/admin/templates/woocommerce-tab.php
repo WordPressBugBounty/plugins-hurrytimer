@@ -81,8 +81,8 @@ use Hurrytimer\Utils\Helpers;
                             class="hurrytimer-wc-products-selection hurryt-w-full"
                             multiple="multiple">
                         <?php foreach ($products as $product): ?>
-                            <option value="<?php echo $product['id'] ?>"
-                                    selected="selected"><?php echo $product['text'] ?></option>
+                            <option value="<?php echo esc_attr($product['id']) ?>"
+                                    selected="selected"><?php echo esc_html($product['text']) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </td>

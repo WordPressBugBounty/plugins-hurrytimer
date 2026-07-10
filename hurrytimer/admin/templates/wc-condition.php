@@ -3,14 +3,14 @@ $conditions = hurryt_wc_conditions();
 $selected   = isset($selected) && !empty($selected) ? $selected: $conditions['stock_status'];
 $conditionId = uniqid('condition_');
 ?>
-<div class="hurryt-wc-condition hurryt-flex hurryt-items-center hurryt-mb-2" data-condition-id="<?php echo $conditionId ?>" >
-    <select name="wc_conditions[<?php echo $groupId ?>][<?php echo $conditionId ?>][key]" class="hurryt-w-1/4 hurryt-mr-2 hurryt-wc-condition-key">
+<div class="hurryt-wc-condition hurryt-flex hurryt-items-center hurryt-mb-2" data-condition-id="<?php echo esc_attr($conditionId) ?>" >
+    <select name="wc_conditions[<?php echo esc_attr($groupId) ?>][<?php echo esc_attr($conditionId) ?>][key]" class="hurryt-w-1/4 hurryt-mr-2 hurryt-wc-condition-key">
         <?php foreach ($conditions as $condition): ?>
             <option value="<?php echo esc_attr($condition['key']) ?>" <?php echo selected($selected['key'], $condition['key']) ?>
-            ><?php echo $condition['name'] ?></option>
+            ><?php echo esc_html($condition['name']) ?></option>
         <?php endforeach;    ?>
     </select>
-    <select  name="wc_conditions[<?php echo $groupId ?>][<?php echo $conditionId ?>][operator]" class="hurryt-w-1/4  hurryt-mr-2 hurryt-wc-condition-operator">
+    <select  name="wc_conditions[<?php echo esc_attr($groupId) ?>][<?php echo esc_attr($conditionId) ?>][operator]" class="hurryt-w-1/4  hurryt-mr-2 hurryt-wc-condition-operator">
     <?php if(in_array( '==', $selected['operators'])): ?>
         <option value="==" <?php echo isset($active) && $active['key'] === '==' ? 'selected': '' ?>> is equal
             to
@@ -36,10 +36,10 @@ $conditionId = uniqid('condition_');
     <?php
     if ( ! empty($values)):
         ?>
-        <select name="wc_conditions[<?php echo $groupId ?>][<?php echo $conditionId ?>][value]" class="hurryt-w-1/4  hurryt-mr-2 hurryt-wc-condition-value">
+        <select name="wc_conditions[<?php echo esc_attr($groupId) ?>][<?php echo esc_attr($conditionId) ?>][value]" class="hurryt-w-1/4  hurryt-mr-2 hurryt-wc-condition-value">
             <?php foreach ($values as $value): ?>
                 <option value="<?php echo esc_attr($value['id']) ?>" <?php echo isset($active) && $active['value'] == $value['id'] ? 'selected': '' ?>
-                ><?php echo $value['name'] ?></option>
+                ><?php echo esc_html($value['name']) ?></option>
             <?php endforeach; ?>
         </select>
     <?php
@@ -48,7 +48,7 @@ $conditionId = uniqid('condition_');
         <?php
         if ($selected['type'] === 'number'):
             ?>
-            <input type="number"  value="<?php echo esc_attr(isset($active) ? $active['value'] : '') ?>" name="wc_conditions[<?php echo $groupId ?>][<?php echo $conditionId ?>][value]"  class="hurryt-w-1/4  hurryt-mr-2 hurryt-wc-condition-value" />
+            <input type="number"  value="<?php echo esc_attr(isset($active) ? $active['value'] : '') ?>" name="wc_conditions[<?php echo esc_attr($groupId) ?>][<?php echo esc_attr($conditionId) ?>][value]"  class="hurryt-w-1/4  hurryt-mr-2 hurryt-wc-condition-value" />
         <?php
         endif;
     endif;

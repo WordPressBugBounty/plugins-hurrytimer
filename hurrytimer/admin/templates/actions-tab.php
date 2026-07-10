@@ -22,7 +22,7 @@ if (!empty($campaign->actions) && hurryt_is_woocommerce_activated()) {
                         <label for="active"><?php _e("Action", "hurrytimer") ?></label>
                     </div>
                     <div class="hurrytimer-action-block-input">
-                        <select name="actions[<?php echo $i ?>][id]" class="hurrytimer-action-select">
+                        <select name="actions[<?php echo intval($i) ?>][id]" class="hurrytimer-action-select">
                             <?php if (hurryt_is_woocommerce_activated()) : ?>
 
                                 <optgroup label="General">
@@ -85,7 +85,7 @@ if (!empty($campaign->actions) && hurryt_is_woocommerce_activated()) {
                         <label for=""><?php _e("Coupon code", 'hurrytimer') ?></label>
                     </div>
                     <div class="hurrytimer-action-block-input">
-                        <select name="actions[<?php echo $i ?>][coupon]" <?php echo empty($coupons) && $coupons_count > 0 ? 'class="hurrytimer-action-wc-coupon"' : '' ?>>
+                        <select name="actions[<?php echo intval($i) ?>][coupon]" <?php echo empty($coupons) && $coupons_count > 0 ? 'class="hurrytimer-action-wc-coupon"' : '' ?>>
                             <?php if (!(empty($coupons) && $coupons_count > 0)) : ?>
                                 <option value="" <?php echo empty($coupons) ? 'selected': '' ?>>Select coupon...</option>
                             <?php endif; ?>
@@ -111,7 +111,7 @@ if (!empty($campaign->actions) && hurryt_is_woocommerce_activated()) {
                         <label for=""><?php _e("Redirect URL", "hurrytimer") ?></label>
                     </div>
                     <div class="hurrytimer-action-block-input">
-                        <input type="text" id="hurrytimer-redirect-url" placeholder="http://" name="actions[<?php echo $i ?>][redirectUrl]" value="<?php echo esc_attr($action['redirectUrl']) ?>" class="hurrytimer-redirect-url" />
+                        <input type="text" id="hurrytimer-redirect-url" placeholder="http://" name="actions[<?php echo intval($i) ?>][redirectUrl]" value="<?php echo esc_attr($action['redirectUrl']) ?>" class="hurrytimer-redirect-url" />
                     </div>
                 </div>
                 <div class="hurrytimer-action-block-subfields hurrytimer-action-display-message-subfields hidden">
@@ -139,7 +139,7 @@ if (!empty($campaign->actions) && hurryt_is_woocommerce_activated()) {
                         <label for=""><?php _e("Stock status", "hurrytimer") ?></label>
                     </div>
                     <div class="hurrytimer-action-block-input">
-                        <select name="actions[<?php echo $i ?>][wcStockStatus]">
+                        <select name="actions[<?php echo intval($i) ?>][wcStockStatus]">
                             <option value="<?php echo C::WC_IN_STOCK ?>" <?php echo selected(
                                                                                 $action['wcStockStatus'],
                                                                                 C::WC_IN_STOCK

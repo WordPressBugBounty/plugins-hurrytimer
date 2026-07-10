@@ -154,12 +154,14 @@ class CampaignBuilder
 
             $timeToNextRecurrence = $this->campaign->is_recurring() ? $this->campaign->timeToNextRecurrence() : 0;
 
-            return [
+            $config = [
                 'recurr'               => $this->campaign->is_recurring(),
                 'timeToNextRecurrence' => $timeToNextRecurrence,
                 'isRegular'            => true,
                 'endDate'              => $endDate,
             ];
+
+            return $config;
 
         } catch ( Exception $e ) {
             error_log($e->getMessage());
@@ -178,7 +180,6 @@ class CampaignBuilder
         $config = $options;
         if ( $this->campaign->is_evergreen() ) {
             $config = array_merge( $config, $this->commonClientConfig(), $this->evergreenClientConfig() );
-
         } else {
             $config = array_merge( $config, $this->commonClientConfig(), $this->regularClientConfig() );
         }
@@ -466,8 +467,8 @@ class CampaignBuilder
 
 
         $target   = $this->campaign->callToAction[ 'new_tab' ] === C::YES ? '_blank' : '_self';
-        $template = "<a class='hurrytimer-button' target='" . $target . "' href='" . $cta_url
-            . "' >" . $cta_text . "</a>";
+        $template = "<a class='hurrytimer-button' target='" . esc_attr($target) . "' href='" . esc_url($cta_url)
+            . "' >" . wp_kses_post($cta_text) . "</a>";
 
         /** @deprecated Use `hurryt_cta_template` instead. */
         $template = apply_filters( "hurryt_{$this->campaign->get_id()}_campaign_cta_template",

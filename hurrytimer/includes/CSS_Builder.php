@@ -23,7 +23,7 @@ class CSS_Builder{
         $path = $uploads_dir . '/hurrytimer/css/';
 
         if( ! file_exists( $path ) ){
-            mkdir( $path, 0777, true );
+            wp_mkdir_p( $path );
         }
         
         if(!file_exists($uploads_dir . '/hurrytimer/index.html')){

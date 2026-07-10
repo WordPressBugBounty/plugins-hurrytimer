@@ -9,13 +9,13 @@ class Form
     {
         ?>
          <input type="hidden"
-               name="<?php echo $name ?>"
+               name="<?php echo esc_attr($name) ?>"
                value="no" 
           >
               
         <input type="checkbox"
-               name="<?php echo $name ?>"
-               id="<?php echo $id ?>"
+               name="<?php echo esc_attr($name) ?>"
+               id="<?php echo esc_attr($id) ?>"
                class="hurryt-input-toggle <?php echo $small ? 'is-small' : '' ?>"
                value="yes" 
                <?php echo $attrs ?>
@@ -38,7 +38,7 @@ class Form
         <span class="hurrytimer-color-preview"></span>
         <input
                 type="text"
-                name="<?php echo $name ?>"
+                name="<?php echo esc_attr($name) ?>"
                 placeholder="Select color"
                 autocomplete="off"
                 class="hurrytimer-color-input"

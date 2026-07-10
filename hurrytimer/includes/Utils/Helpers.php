@@ -8,16 +8,21 @@ class Helpers
 {
     public static function ip_address()
     {
-        $ip = null;
+        $ip = '';
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $ip = $_SERVER['HTTP_CLIENT_IP'];
         } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+            // HTTP_X_FORWARDED_FOR can contain multiple IPs; use the first one.
+            $ips = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+            $ip = trim($ips[0]);
         } else {
-            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
         }
 
-        return $ip;
+        // Validate the IP address to prevent injection.
+        $ip = filter_var($ip, FILTER_VALIDATE_IP);
+
+        return $ip ? $ip : '0.0.0.0';
     }
 
     /**

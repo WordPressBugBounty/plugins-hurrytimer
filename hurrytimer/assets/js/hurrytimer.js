@@ -289,8 +289,7 @@ var HurrytimerCampaign = /*#__PURE__*/function () {
     this.startEventDispatched = false;
     this.state = state;
     this.restartIntervalId = -1;
-    this.currentEndDate = null;
-  }
+    this.currentEndDate = null; }
   /**
    * @param endDateInMS
    * @return void
@@ -588,8 +587,7 @@ var HurrytimerCampaign = /*#__PURE__*/function () {
     value: function run() {
       var _this2 = this;
 
-      this.triggerInitEvent();
-      this.elementRef.countdown(this.getEndDate(), function (e) {
+      this.triggerInitEvent(); this.elementRef.countdown(this.getEndDate(), function (e) {
         return _this2.onCountdownUpdate(e);
       });
       var stickyBar = this.elementRef.closest('.hurrytimer-sticky');
@@ -784,8 +782,7 @@ var HurrytimerCampaign = /*#__PURE__*/function () {
           }
         });
       }, 1000);
-    }
-  }]);
+    } }]);
 
   return HurrytimerCampaign;
 }();

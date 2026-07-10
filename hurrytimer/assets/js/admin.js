@@ -1375,6 +1375,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }); // Initialize end type selection
 
-  jQuery('#hurrytimer-evergreen-end-type').trigger('change');
+  jQuery('#hurrytimer-evergreen-end-type').trigger('change'); // ------------------------------------------------------------
+  // Date Ranges Repeater (Regular mode)
+  // ------------------------------------------------------------
+  //removeIf(pro)
+  // Pro teaser dialog (free version only)
+
+  $('#hurryt-toggle-date-ranges-teaser').on('click', function (e) {
+    e.preventDefault();
+    $('#hurryt-deadlines-pro-dialog').fadeIn(200);
+  });
+  $(document).on('click', '#hurryt-deadlines-dialog-close, .hurryt-pro-dialog-overlay', function (e) {
+    if (e.target === this) {
+      $('#hurryt-deadlines-pro-dialog').fadeOut(150);
+    }
+  }); //endRemoveIf(pro)
 })(jQuery);
 //# sourceMappingURL=admin.js.map

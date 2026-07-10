@@ -15,14 +15,12 @@ use Hurrytimer\Utils\Helpers;
         ?>
     </form>
     <button type="button" class="button button-default hurrytResetAllEvergreenCampaigns  hurryt-block"
-            data-cookie-prefix="<?php echo Cookie_Detection::COOKIE_PREFIX ?>"
-            data-url="<?php echo Helpers::createResetAllEvergreenCampaignsUrl('admin') ?>">Reset all evergreen
-        campaigns for me...
+            data-cookie-prefix="<?php echo esc_attr(Cookie_Detection::COOKIE_PREFIX) ?>"
+            data-url="<?php echo esc_url(Helpers::createResetAllEvergreenCampaignsUrl('admin')) ?>"><?php esc_html_e('Reset all evergreen campaigns for me...', 'hurrytimer') ?>
     </button>
     <br>
     <button type="button" class="button button-default hurrytResetAllEvergreenCampaigns hurryt-block"
-            data-cookie-prefix="<?php echo Cookie_Detection::COOKIE_PREFIX ?>"
-            data-url="<?php echo Helpers::createResetAllEvergreenCampaignsUrl('all') ?>">Reset all evergreen
-        campaigns for all visitors...
+            data-cookie-prefix="<?php echo esc_attr(Cookie_Detection::COOKIE_PREFIX) ?>"
+            data-url="<?php echo esc_url(Helpers::createResetAllEvergreenCampaignsUrl('all')) ?>"><?php esc_html_e('Reset all evergreen campaigns for all visitors...', 'hurrytimer') ?>
     </button>
 </div>

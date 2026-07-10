@@ -152,8 +152,20 @@ class Frontend {
             wp_die();
         }
 
-        $evergreen_campaign = new EvergreenCampaign(intval($_POST['cid']));
-        $evergreen_campaign->setEndDate(filter_input(INPUT_POST, 'timestamp'));
+        $cid = intval($_POST['cid']);
+        $timestamp = filter_input(INPUT_POST, 'timestamp', FILTER_VALIDATE_INT);
+
+        if (!$cid || $timestamp === false || $timestamp === null) {
+            wp_die();
+        }
+
+        // Verify the campaign exists and is of the correct type.
+        if (!get_post($cid) || get_post_type($cid) !== HURRYT_POST_TYPE) {
+            wp_die();
+        }
+
+        $evergreen_campaign = new EvergreenCampaign($cid);
+        $evergreen_campaign->setEndDate($timestamp);
         wp_die('Success!');
     }
 

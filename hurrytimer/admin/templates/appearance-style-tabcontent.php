@@ -863,7 +863,7 @@ use Hurrytimer\Utils\Form;
                             class="hurryt_w-full" placeholder="Select pages">
                         <?php $pages = get_pages(['post_status' => 'publish']); ?>
                         <?php foreach ($pages as $page): ?>
-                            <option value="<?php echo $page->ID ?>"
+                            <option value="<?php echo esc_attr($page->ID) ?>"
                                 <?php echo in_array($page->ID, $campaign->stickyBarPages)
                                     ? 'selected' : '' ?>>
                                 <?php echo esc_html($page->post_title)
@@ -891,7 +891,7 @@ use Hurrytimer\Utils\Form;
                             class="hurryt_w-full" placeholder="Select pages">
                         <?php $pages = get_pages(['post_status' => 'publish']); ?>
                         <?php foreach ($pages as $page): ?>
-                            <option value="<?php echo $page->ID ?>"
+                            <option value="<?php echo esc_attr($page->ID) ?>"
                                 <?php echo in_array($page->ID, $campaign->stickyExcludePages)
                                     ? 'selected' : '' ?>>
                                 <?php echo esc_html($page->post_title)
