@@ -3,7 +3,7 @@ Contributors: nlemsieh
 Donate link: https://www.paypal.me/nlemsieh
 Tags: countdown timer, sales countdown timer, evergreen countdown, recurring countdown timer, flash sale timer, urgency timer, scarcity timer, limited time offer timer, FOMO plugin, WooCommerce countdown, WooCommerce sale timer, WordPress countdown timer
 Requires at least: 4.0
-Tested up to: 7.0
+Tested up to: 7.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Requires PHP: 5.6
